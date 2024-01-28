@@ -19,7 +19,7 @@ If Joomla articles are not enough, you can expand Digi Showcase with its Expansi
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/gregorionuti/Joomla-Digi-Showcase/main)
 ![GitHub License](https://img.shields.io/github/license/gregorionuti/Joomla-Digi-Showcase)
 ![Static Badge](https://img.shields.io/badge/joomla-cadetblue?label=platform)
-![Static Badge](https://img.shields.io/badge/3.0%2B%20%7C%204.0%2B-blue?logo=joomla&logoColor=white&label=joomla)
+![Static Badge](https://img.shields.io/badge/3.9%2B%20%7C%204.0%2B-blue?logo=joomla&logoColor=white&label=joomla)
 ![Static Badge](https://img.shields.io/badge/module-orangered?logo=joomla&logoColor=white&label=type)
 ![Static Badge](https://img.shields.io/badge/7.0%2B%20%7C%208.0%2B-purple?logo=php&logoColor=white&label=php)
 
