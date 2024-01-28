@@ -1,0 +1,79 @@
+/**
+ * 
+ * @version             See field version manifest file
+ * @package             See field name manifest file
+ * @author				Gregorio Nuti
+ * @copyright			See field copyright manifest file
+ * @license             GNU General Public License version 2 or later
+ * 
+ */
+
+#digi_showcase_carousel .slick-slide img {
+    margin-left: auto;
+    margin-right: auto;
+}
+#digi_showcase_carousel:not(.slick-vertical) .slick-prev {
+    left: 0;
+}
+#digi_showcase_carousel:not(.slick-vertical) .slick-next {
+    right: 0;
+}
+#digi_showcase_carousel .center-element:not(.slick-center) .item-content {
+    transform: scale(0.8);
+}
+#digi_showcase_carousel .slick-prev:before,
+#digi_showcase_carousel .slick-next:before {
+    color: rgba(0, 0, 0, 0.6);
+}
+#digi_showcase_carousel.slick-vertical.legacy .slick-prev,
+#digi_showcase_carousel.slick-vertical.legacy .slick-next {
+    left: 47.5%;
+    transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+}
+#digi_showcase_carousel.slick-vertical.legacy .slick-prev {
+    margin-top: 0;
+    position: relative;
+}
+#digi_showcase_carousel.slick-vertical.legacy .slick-next {
+    top: 10px;
+}
+#digi_showcase_carousel.slick-vertical.modern .slick-prev,
+#digi_showcase_carousel.slick-vertical.modern .slick-next {
+    left: 48.5%;
+    transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+}
+#digi_showcase_carousel.slick-vertical.modern .slick-prev {
+    top: 100%;
+    margin-top: 1%;
+	position: absolute;
+}
+#digi_showcase_carousel.slick-vertical.modern .slick-next {
+    top: 0px;
+	margin-top: -1%;
+}
+#digi_showcase_carousel .slick-dots {
+	margin-left: 0;
+}
+#digi_showcase_carousel.slick-vertical.modern .slick-dots {
+	position: unset;
+}
+#digi_showcase_carousel .slick-dots li button {
+    border: 2px solid #eee;
+    border-radius: 15px;
+}
+#digi_showcase_carousel .slick-dots li.slick-active button {
+    border: 2px solid #3d3d3d;
+}
+#digi_showcase_carousel .slick-dots li button::before {
+    color: #3d3d3d;
+    font-size: 12px;
+}
+#digi_showcase_carousel .slick-dots li.slick-active button::before {
+    opacity: 1;
+}

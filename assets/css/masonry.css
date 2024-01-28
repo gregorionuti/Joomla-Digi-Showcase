@@ -1,0 +1,47 @@
+/**
+ * 
+ * @version             See field version manifest file
+ * @package             See field name manifest file
+ * @author				Gregorio Nuti
+ * @copyright			See field copyright manifest file
+ * @license             GNU General Public License version 2 or later
+ * 
+ */
+ 
+#digi_showcase_masonry .masonry-block {
+	float: left;
+}
+#digi_showcase_masonry .showcase-item {
+	box-sizing: border-box;
+}
+#digi_showcase_masonry .item-content {
+	margin: 0;
+	overflow: hidden;
+}
+#digi_showcase_masonry .item-content .image {
+	background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+#digi_showcase_masonry .overlay {
+	background-image: none;
+	background-color: rgba(0, 0, 0, 0);
+	transition: background-color 0.3s;
+	position: absolute;
+}
+#digi_showcase_masonry .overlay:hover {
+	background-color: rgba(0, 0, 0, 0.7);
+}
+#digi_showcase_masonry .item-content > div:first-child {
+	position: absolute;
+}
+#digi_showcase_masonry .item-content > div:first-child > .masonry-text {
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+#digi_showcase_masonry .item-content:hover > div:first-child > .masonry-text {
+	opacity: 1;
+}
+#digi_showcase_masonry .clearfix {
+	clear: both;
+}

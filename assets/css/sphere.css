@@ -1,0 +1,47 @@
+/**
+ * 
+ * @version             See field version manifest file
+ * @package             See field name manifest file
+ * @author				Gregorio Nuti
+ * @copyright			See field copyright manifest file
+ * @license             GNU General Public License version 2 or later
+ * 
+ */
+ 
+#digi_showcase_sphere {
+	position: relative;
+}
+#digi_showcase_sphere::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 18px;
+  	height: 100%;
+	width: 4px;
+}
+#digi_showcase_sphere * {
+	resize: none;
+    border: none;
+    outline: none;
+    text-decoration: none;
+    padding: 0px;
+    margin: 0px;
+    list-style-type: none;
+}
+#digi_showcase_sphere .sphere-content {
+	text-align: center;
+}
+#digi_showcase_sphere .sphere-content > * {
+	margin-top: 10px;
+}
+#digi_showcase_sphere .sphere-content > *:first-child {
+	margin-top: 0;
+}
+#digi_showcase_sphere .sphere-content > * + a > img {
+	margin-top: 10px;
+}
+#digi_showcase_sphere .sphere-item img {
+	width: 80px;
+    border-radius: 40px;
+    height: 80px;
+}

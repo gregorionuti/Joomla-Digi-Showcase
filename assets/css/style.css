@@ -1,0 +1,44 @@
+/**
+ * 
+ * @version             See field version manifest file
+ * @package             See field name manifest file
+ * @author				Gregorio Nuti
+ * @copyright			See field copyright manifest file
+ * @license             GNU General Public License version 2 or later
+ * 
+ */
+
+/* content */
+.digi_showcase .image {
+    text-align: center;
+}
+
+/* read more */
+.digi_showcase .readmore-default {
+	background-color: #acb7c1;
+	background-image: none;
+	box-shadow: none;
+    border-radius: 4px;
+    color: #fff;
+    display: inline-block;
+    padding: 10px 15px;
+    text-decoration: none;
+    text-shadow: none;
+    transition: background-color 0.3s;
+}
+.digi_showcase .readmore-default:hover {
+	background-color: #bac4cc;
+	background-image: none;
+	box-shadow: none;
+	color: #fff;
+    text-decoration: none;
+    text-shadow: none;
+}
+.digi_showcase.default .readmore-wrapper {
+	margin-bottom: 20px;
+    margin-top: 20px;
+}
+.digi_showcase.carousel .readmore-wrapper {
+	margin-bottom: 20px;
+    margin-top: 20px;
+}

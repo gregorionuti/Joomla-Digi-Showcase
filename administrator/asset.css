@@ -1,0 +1,57 @@
+/**
+ * 
+ * @version             See field version manifest file
+ * @package             See field name manifest file
+ * @author				Gregorio Nuti
+ * @copyright			See field copyright manifest file
+ * @license             GNU General Public License version 2 or later
+ * 
+ */
+ 
+/* general */
+label.hidden,
+label[id*=hidden] {
+    display: none;
+}
+.input-group span.px,
+.input-group span.percent,
+.input-group span.seconds,
+.input-group span.milliseconds {
+    background-color: #005e8d;
+}
+.controls a[target="_blank"]::before {
+	content: "";
+}
+
+/* restore descriptions due of joomla 4 lack */
+.hide-aware-inline-help {
+	display: block !important;
+	margin-top: 0.5rem;
+}
+
+/* spacers */
+.spacer .title label {
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 20px;
+}
+.spacer .hide-aware-inline-help {
+	margin-top: 0.3rem;
+	padding-bottom: 0.5rem;
+	border-bottom: 1px solid #BAC9DE;
+}
+
+/* media queries */
+@media (min-width: 768px) {
+	.extended-textarea,
+	.input-extended-textarea {
+		width: 97%;
+	}
+}
+@media (max-width: 767px) {
+	.share-me,
+	.share-me .share-me {
+		 margin-top: 5px;
+		 margin-bottom: 10px;
+	}
+}

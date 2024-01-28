@@ -1,0 +1,665 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="3.9" client="site" method="upgrade">
+	<identifier>mod://site/digi_showcase</identifier>
+	<name>MOD_DIGI_SHOWCASE</name>
+	<author>Digigreg</author>
+	<creationDate>Dec 2022</creationDate>
+	<copyright>Copyright Digigreg 2014-2022</copyright>
+	<authorEmail>info@digigreg.com</authorEmail>
+	<authorUrl>https://www.digigreg.com</authorUrl>
+	<version>2.2.0</version>
+    <license>GNU General Public License version 2 or later</license>
+	<description>MOD_DIGI_SHOWCASE_XML_DESCRIPTION</description>
+	<scriptfile>script.php</scriptfile>
+	<files>
+		<filename module="mod_digi_showcase">mod_digi_showcase.php</filename>
+        <filename>helper.php</filename>
+		<filename>mod_digi_showcase.xml</filename>
+        <folder>administrator</folder>
+        <folder>assets</folder>
+        <folder>images</folder>
+        <folder>include</folder>
+        <folder>settings</folder>
+		<folder>tmpl</folder>
+	</files>
+    <languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.mod_digi_showcase.ini</language>
+		<language tag="en-GB">en-GB/en-GB.mod_digi_showcase.sys.ini</language>
+		<language tag="it-IT">it-IT/it-IT.mod_digi_showcase.ini</language>
+		<language tag="it-IT">it-IT/it-IT.mod_digi_showcase.sys.ini</language>
+		<language tag="de-DE">de-DE/de-DE.mod_digi_showcase.ini</language>
+		<language tag="de-DE">de-DE/de-DE.mod_digi_showcase.sys.ini</language>
+		<language tag="ja-JP">ja-JP/ja-JP.mod_digi_showcase.ini</language>
+		<language tag="ja-JP">ja-JP/ja-JP.mod_digi_showcase.sys.ini</language>
+	</languages>
+    <config>
+		<fields name="params">
+            <fieldset name="basic" label="MOD_DIGI_SHOWCASE_FIELDSET_BASIC_OPTIONS" addfieldpath="/modules/mod_digi_showcase/administrator/elements">
+                <field name="xml_hidden" type="xml" />
+                
+                <field name="share-me_hidden" type="shareme" />
+                
+                <field name="advertising_hidden" type="digishowcaseadv" />
+                
+                <field name="asset_hidden" type="asset" />
+                
+                <field name="module_version" type="hidden" default="2.2.0" />
+        	</fieldset>
+			<fieldset name="basic_options" label="MOD_DIGI_SHOWCASE_FIELDSET_BASIC_OPTIONS" addfieldpath="/modules/mod_digi_showcase/administrator/elements">
+				<field type="spacer" name="wizard" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_WIZARD" />
+				
+				<field name="show-wizard" type="radio" layout="joomla.form.field.radio.switcher" default="1" label="MOD_DIGI_SHOWCASE_FIELD_SHOW_WIZARD_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_SHOW_WIZARD_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+				
+				<field name="wizard_hidden" type="digishowcasewizard" showon="show-wizard:1" />
+				
+				<field type="spacer" name="source-hr" hr="true" />
+				
+                <field type="spacer" name="source" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_DATA_SOURCE" />
+                
+                <field name="data-source" type="list" default="0" label="MOD_DIGI_SHOWCASE_FIELD_DATA_SOURCE_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_DATA_SOURCE_DESC">
+                	<option value="0">MOD_DIGI_SHOWCASE_FIELD_JOOMLA_CATEGORIES</option>
+                	<option value="1">MOD_DIGI_SHOWCASE_FIELD_JOOMLA_TAGS</option>
+                	<option value="2">MOD_DIGI_SHOWCASE_FIELD_JOOMLA_ARTICLES</option>
+                	<option value="50">MOD_DIGI_SHOWCASE_FIELD_CUSTOM_CSV</option>
+                	<option value="99">MOD_DIGI_SHOWCASE_FIELD_EXPANSION_PACKS</option>
+				</field>
+                
+				<field name="joomla-categories" type="category" extension="com_content" multiple="true" show_root="true" showon="data-source:0" label="MOD_DIGI_SHOWCASE_FIELD_SELECT_CATEGORY_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_SELECT_CATEGORY_DESC" />
+                
+                <field name="joomla-tags" type="tag" mode="ajax" multiple="true" showon="data-source:1" label="MOD_DIGI_SHOWCASE_FIELD_SELECT_TAGS_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_SELECT_TAGS_DESC" />
+                
+                <field name="joomla-articles" type="sql" query="SELECT id AS 'value', title AS 'joomla-articles' FROM #__content WHERE (state = 1 OR state = 2)" multiple="true" showon="data-source:2" label="MOD_DIGI_SHOWCASE_FIELD_SELECT_ARTICLES_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_SELECT_ARTICLES_DESC" />
+                
+                <field name="custom-csv" type="textareacsv" class="extended-textarea" rows="15" cols="5" values="Title,Category,Description,Image,Extra-info,Link" showon="data-source:50" label="MOD_DIGI_SHOWCASE_FIELD_SELECT_CUSTOM_CSV_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_SELECT_CUSTOM_CSV_DESC" />
+                
+                <field name="expansion-pack" type="plugins" folder="digishowcase" showon="data-source:99" label="MOD_DIGI_SHOWCASE_FIELD_SELECT_EXPANSION_PACK_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_SELECT_EXPANSION_PACK_DESC">
+					<option value="">JOPTION_DO_NOT_USE</option>
+				</field>
+				
+				<field name="expansion-pack-data" type="digishowcasextd" showon="data-source:99" />
+                
+                <field name="show-featured-items" type="list" default="1" label="MOD_DIGI_SHOWCASE_FIELD_SHOW_FEATURED_ITEMS_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_SHOW_FEATURED_ITEMS_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+                    <option value="2">MOD_DIGI_SHOWCASE_FIELD_ONLY</option>
+				</field>
+                
+                <field name="show-expired-articles" type="radio" layout="joomla.form.field.radio.switcher" default="0" label="MOD_DIGI_SHOWCASE_FIELD_SHOW_EXPIRED_ITEMS_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_SHOW_EXPIRED_ITEMS_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+				
+				<field name="items-offset" type="number" default="0" label="MOD_DIGI_SHOWCASE_FIELD_ITEMS_OFFSET_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_ITEMS_OFFSET_DESC" />
+				
+				<field name="articles-time-correction" type="list" default="+0" showon="show-expired-articles:0" label="MOD_DIGI_SHOWCASE_FIELD_ITEMS_TIME_CORRECTION_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_ITEMS_TIME_CORRECTION_DESC">
+                	<option value="-12">- 12</option>
+                    <option value="-11">- 11</option>
+                    <option value="-10">- 10</option>
+                    <option value="-9">- 9</option>
+                    <option value="-8">- 8</option>
+                    <option value="-7">- 7</option>
+                    <option value="-6">- 6</option>
+                    <option value="-5">- 5</option>
+                    <option value="-4">- 4</option>
+                    <option value="-3">- 3</option>
+                    <option value="-2">- 2</option>
+                    <option value="-1">- 1</option>
+                    <option value="+0">0</option>
+                    <option value="+1">+ 1</option>
+                    <option value="+2">+ 2</option>
+                    <option value="+3">+ 3</option>
+                    <option value="+4">+ 4</option>
+                    <option value="+5">+ 5</option>
+                    <option value="+6">+ 6</option>
+                    <option value="+7">+ 7</option>
+                    <option value="+8">+ 8</option>
+                    <option value="+9">+ 9</option>
+                    <option value="+10">+ 10</option>
+                    <option value="+11">+ 11</option>
+                    <option value="+12">+ 12</option>
+				</field>
+				
+				<field type="spacer" name="items-order-hr" hr="true" />
+                
+                <field type="spacer" name="items-order" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_ITEMS_ORDER" />
+                
+				<field name="order-by" type="list" default="0" label="MOD_DIGI_SHOWCASE_FIELD_ORDER_BY_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_ORDER_BY_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_ORDER_DATE</option>
+                    <option value="4">MOD_DIGI_SHOWCASE_FIELD_ORDER_DATE_PUBLISHED</option>
+                    <option value="5">MOD_DIGI_SHOWCASE_FIELD_ORDER_DATE_LAST_EDIT</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_ORDER_TITLE</option>
+                    <option value="6">MOD_DIGI_SHOWCASE_FIELD_ORDER_HITS</option>
+                    <option value="2">MOD_DIGI_SHOWCASE_FIELD_ORDER_MANUAL</option>
+                    <option value="3">MOD_DIGI_SHOWCASE_FIELD_ORDER_RANDOM</option>
+				</field>
+                
+				<field name="order-type" type="list" default="1" label="MOD_DIGI_SHOWCASE_FIELD_ORDER_MODE_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_ORDER_MODE_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_ORDER_ASCENDING</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_ORDER_DESCENDING</option>
+				</field>
+			</fieldset>
+            <fieldset name="module_layout" label="MOD_DIGI_SHOWCASE_FIELDSET_LAYOUT" addfieldpath="/modules/mod_digi_showcase/administrator/elements">
+            	<field type="spacer" name="layout-features" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_LAYOUT_FEATURES" />
+                
+				<field name="include-title-inside" type="radio" layout="joomla.form.field.radio.switcher" default="0" label="MOD_DIGI_SHOWCASE_FIELD_INCLUDE_TITLE_INSIDE_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_INCLUDE_TITLE_INSIDE_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+				
+				<field name="module-title-tag" type="list" default="p" label="MOD_DIGI_SHOWCASE_FIELD_MODULE_TITLE_TAG_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_MODULE_TITLE_TAG_DESC" showon="include-title-inside:1">
+                    <option value="h1">MOD_DIGI_SHOWCASE_FIELD_H1</option>
+                    <option value="h2">MOD_DIGI_SHOWCASE_FIELD_H2</option>
+                    <option value="h3">MOD_DIGI_SHOWCASE_FIELD_H3</option>
+                    <option value="h4">MOD_DIGI_SHOWCASE_FIELD_H4</option>
+                    <option value="h5">MOD_DIGI_SHOWCASE_FIELD_H5</option>
+                    <option value="h6">MOD_DIGI_SHOWCASE_FIELD_H6</option>
+                    <option value="div">MOD_DIGI_SHOWCASE_FIELD_DIV</option>
+                    <option value="p">MOD_DIGI_SHOWCASE_FIELD_P</option>
+                    <option value="span">MOD_DIGI_SHOWCASE_FIELD_SPAN</option>
+				</field>
+				
+				<field name="intro-text" type="textarea" rows="5" cols="5" label="MOD_DIGI_SHOWCASE_FIELD_INTRO_TEXT_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_INTRO_TEXT_DESC" filter="string" />
+				
+				<field type="spacer" name="module-mode-hr" hr="true" />
+				
+            	<field type="spacer" name="module-mode" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_LAYOUT_MODULE_DISPLAY_OPTIONS" />
+            	
+                <field name="mode" type="list" default="0" label="MOD_DIGI_SHOWCASE_FIELD_MODE_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_MODE_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_MODE_STANDARD</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_MODE_CAROUSEL</option>
+                    <option value="2">MOD_DIGI_SHOWCASE_FIELD_MODE_TIMELINE</option>
+                    <option value="3">MOD_DIGI_SHOWCASE_FIELD_MODE_SHPERE</option>
+                    <option value="4">MOD_DIGI_SHOWCASE_FIELD_MODE_MASONRY</option>
+				</field>
+				
+				<field name="bootstrap-version" type="list" default="3" label="MOD_DIGI_SHOWCASE_FIELD_BOOTSTRAP_VERSION_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_BOOTSTRAP_VERSION_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_BOOTSTRAP_VERSION_2</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_BOOTSTRAP_VERSION_3</option>
+                    <option value="2">MOD_DIGI_SHOWCASE_FIELD_BOOTSTRAP_VERSION_4</option>
+                    <option value="3">MOD_DIGI_SHOWCASE_FIELD_BOOTSTRAP_VERSION_5</option>
+				</field>
+				
+				<field type="spacer" name="layout-items-arrangement-hr" showon="mode:0" hr="true" />
+				
+				<field type="spacer" name="layout-items-arrangement" class="title" showon="mode:0" label="MOD_DIGI_SHOWCASE_SEPARATOR_STANDARD_MODE_FEATURES" description="MOD_DIGI_SHOWCASE_FIELD_STANDARD_MODE_DESC" />
+				
+				<field name="rows" type="number" default="2" min="1" showon="mode:0" label="MOD_DIGI_SHOWCASE_FIELD_ROWS_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_ROWS_DESC" />
+                
+				<field name="columns" type="number" class="input-bootstrap-columns" default="2" min="1" max="12" showon="mode:0" label="MOD_DIGI_SHOWCASE_FIELD_COLUMNS_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_COLUMNS_DESC" />
+				
+				<field type="spacer" name="carousel-features-hr" showon="mode:1" hr="true" />
+				
+				<field type="spacer" name="carousel-features" class="title" showon="mode:1" label="MOD_DIGI_SHOWCASE_SEPARATOR_CAROUSEL_FEATURES" description="MOD_DIGI_SHOWCASE_FIELD_CAROUSEL_DESC" />
+                
+                <field name="carousel-mode" type="list" default="0" showon="mode:1" label="MOD_DIGI_SHOWCASE_FIELD_CAROUSEL_MODE_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_CAROUSEL_MODE_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_HORIZONTAL</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_VERTICAL</option>
+                </field>
+                
+                <field name="carousel-autoanimation" type="radio" layout="joomla.form.field.radio.switcher" default="0" showon="mode:1" label="MOD_DIGI_SHOWCASE_FIELD_CAROUSEL_AUTOANIMATION_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_CAROUSEL_AUTOANIMATION_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_OFF</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_ON</option>
+				</field>
+                
+                <field name="carousel-autoanimation-interval" type="interval" extension="ms" default="5000" min="1000" step="100" showon="carousel-autoanimation:1[AND]mode:1" label="MOD_DIGI_SHOWCASE_FIELD_CAROUSEL_AUTOANIMATION_INTERVAL_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_CAROUSEL_AUTOANIMATION_INTERVAL_DESC" />
+                
+                <field name="carousel-items-quantity" type="number" default="6" min="1" showon="mode:1" label="MOD_DIGI_SHOWCASE_FIELD_CAROUSEL_ITEMS_QUANTITY_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_CAROUSEL_ITEMS_QUANTITY_DESC" />
+                
+                <field name="carousel-columns-quantity" type="number" default="3" min="1" showon="mode:1" label="MOD_DIGI_SHOWCASE_FIELD_CAROUSEL_COLUMNS_QUANTITY_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_CAROUSEL_COLUMNS_QUANTITY_DESC" />
+                
+                <field name="carousel-scroll-quantity" type="number" default="1" min="1" showon="mode:1" label="MOD_DIGI_SHOWCASE_FIELD_CAROUSEL_SCROLL_QUANTITY_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_CAROUSEL_SCROLL_QUANTITY_DESC" />
+                
+                <field name="carousel-arrows" type="radio" layout="joomla.form.field.radio.switcher" default="1" showon="mode:1" label="MOD_DIGI_SHOWCASE_FIELD_CAROUSEL_ARROWS_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_CAROUSEL_ARROWS_DESC">
+                	<option value="0">MOD_DIGI_SHOWCASE_FIELD_OFF</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_ON</option>
+				</field>
+                
+                <field name="carousel-dots" type="radio" layout="joomla.form.field.radio.switcher" default="0" showon="mode:1" label="MOD_DIGI_SHOWCASE_FIELD_CAROUSEL_DOTS_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_CAROUSEL_DOTS_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_OFF</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_ON</option>
+				</field>
+                
+                <field name="carousel-loop" type="radio" layout="joomla.form.field.radio.switcher" default="1" showon="mode:1" label="MOD_DIGI_SHOWCASE_FIELD_CAROUSEL_LOOP_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_CAROUSEL_LOOP_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_OFF</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_ON</option>
+                </field>
+                
+                <field name="carousel-center-element" type="radio" layout="joomla.form.field.radio.switcher" default="0" showon="mode:1" label="MOD_DIGI_SHOWCASE_FIELD_CAROUSEL_CENTER_ELEMENT_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_CAROUSEL_CENTER_ELEMENT_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_OFF</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_ON</option>
+                </field>
+                
+                <field type="spacer" name="timeline-features-hr" showon="mode:2" hr="true" />
+                
+                <field type="spacer" name="timeline-features" class="title" showon="mode:2" label="MOD_DIGI_SHOWCASE_SEPARATOR_TIMELINE_FEATURES" description="MOD_DIGI_SHOWCASE_FIELD_TIMELINE_DESC" />
+				
+				<field name="timeline-items-quantity" type="number" default="6" min="1" showon="mode:2" label="MOD_DIGI_SHOWCASE_FIELD_TIMELINE_ITEMS_QUANTITY_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_TIMELINE_ITEMS_QUANTITY_DESC" />
+                
+            	<field name="timeline-animation" type="radio" layout="joomla.form.field.radio.switcher" default="1" showon="mode:2" label="MOD_DIGI_SHOWCASE_FIELD_TIMELINE_ANIMATION_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_TIMELINE_ANIMATION_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_OFF</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_ON</option>
+				</field>
+				
+				<field name="timeline-image-inside" type="radio" layout="joomla.form.field.radio.switcher" default="0" showon="mode:2" label="MOD_DIGI_SHOWCASE_FIELD_TIMELINE_IMAGE_INSIDE_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_TIMELINE_IMAGE_INSIDE_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_OFF</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_ON</option>
+				</field>
+				
+				<field name="timeline-primary-color" type="color" default="#fff" showon="mode:2" label="MOD_DIGI_SHOWCASE_FIELD_TIMELINE_PRIMARY_COLOR_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_TIMELINE_PRIMARY_COLOR_DESC" />
+				
+				<field name="timeline-secondary-color" type="color" default="#f5f5f5" showon="mode:2" label="MOD_DIGI_SHOWCASE_FIELD_TIMELINE_SECONDARY_COLOR_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_TIMELINE_SECONDARY_COLOR_DESC" />
+                
+                <field name="timeline-border-radius" type="size" extension="px" default="3" min="0" showon="mode:2" label="MOD_DIGI_SHOWCASE_FIELD_TIMELINE_BORDER_RADIUS_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_TIMELINE_BORDER_RADIUS_DESC" />
+                
+                <field name="timeline-max-width" type="size" extension="px" default="1200" min="640" max="1920" showon="mode:2" label="MOD_DIGI_SHOWCASE_FIELD_TIMELINE_MAX_WIDTH_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_TIMELINE_MAX_WIDTH_DESC" />
+                
+                <field name="timeline-switch-width" type="size" extension="px" default="768" min="640" max="1100" showon="mode:2" label="MOD_DIGI_SHOWCASE_FIELD_TIMELINE_SWITCH_WIDTH_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_TIMELINE_SWITCH_WIDTH_DESC" />
+                
+                <field type="spacer" name="sphere-features-hr" showon="mode:3" hr="true" />
+                
+                <field type="spacer" name="sphere-features" class="title" showon="mode:3" label="MOD_DIGI_SHOWCASE_SEPARATOR_SPHERE_FEATURES" description="MOD_DIGI_SHOWCASE_FIELD_SPHERE_DESC" />
+                
+                <field name="sphere-items-quantity" type="number" default="18" min="1" showon="mode:3" label="MOD_DIGI_SHOWCASE_FIELD_SPHERE_ITEMS_QUANTITY_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_SPHERE_ITEMS_QUANTITY_DESC" />
+                
+                <field name="sphere-width" type="size" extension="px" default="400" min="100" max="1000" showon="mode:3" label="MOD_DIGI_SHOWCASE_FIELD_SPHERE_WIDTH_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_SPHERE_WIDTH_DESC" />
+                
+                <field name="sphere-height" type="size" extension="px" default="400" min="100" max="1000" showon="mode:3" label="MOD_DIGI_SHOWCASE_FIELD_SPHERE_HEIGHT_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_SPHERE_HEIGHT_DESC" />
+                
+                <field name="sphere-radius" type="size" extension="px" default="150" min="50" max="1000" showon="mode:3" label="MOD_DIGI_SHOWCASE_FIELD_SPHERE_RADIUS_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_SPHERE_RADIUS_DESC" />
+                
+                <field type="spacer" name="masonry-features-hr" showon="mode:4" hr="true" />
+                
+                <field type="spacer" name="masonry-features" class="title" showon="mode:4" label="MOD_DIGI_SHOWCASE_SEPARATOR_MASONRY_FEATURES" description="MOD_DIGI_SHOWCASE_FIELD_MASONRY_DESC" />
+                
+                <field name="masonry-items-quantity" type="number" default="20" min="1" showon="mode:4" label="MOD_DIGI_SHOWCASE_FIELD_MASONRY_ITEMS_QUANTITY_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_MASONRY_ITEMS_QUANTITY_DESC" />
+				
+                <field name="masonry-columns" type="list" default="4" showon="mode:4" label="MOD_DIGI_SHOWCASE_FIELD_MASONRY_COLUMNS_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_MASONRY_COLUMNS_DESC">
+                    <option value="4">MOD_DIGI_SHOWCASE_FIELD_FOUR</option>
+                    <option value="5">MOD_DIGI_SHOWCASE_FIELD_FIVE</option>
+                    <option value="6">MOD_DIGI_SHOWCASE_FIELD_SIX</option>
+				</field>
+				
+                <field name="masonry-mode" type="list" default="1" showon="mode:4" label="MOD_DIGI_SHOWCASE_FIELD_MASONRY_MODE_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_MASONRY_MODE_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_MASONRY_MODE_FIXED</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_MASONRY_MODE_RANDOM</option>
+                    <option value="2">MOD_DIGI_SHOWCASE_FIELD_MASONRY_MODE_PATTERN</option>
+				</field>
+				
+				<field name="masonry-blocks-size" type="list" default="1" showon="mode:4[AND]masonry-mode:0" label="MOD_DIGI_SHOWCASE_FIELD_MASONRY_BLOCKS_SIZE_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_MASONRY_BLOCKS_SIZE_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_1-1</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_2-2</option>
+                    <option value="2">MOD_DIGI_SHOWCASE_FIELD_2-1</option>
+                    <option value="3">MOD_DIGI_SHOWCASE_FIELD_1-2</option>
+				</field>
+				
+				<field name="masonry-pattern" type="textarea" rows="5" cols="5" default="" showon="mode:4[AND]masonry-mode:2" label="MOD_DIGI_SHOWCASE_FIELD_MASONRY_PATTERN_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_MASONRY_PATTERN_DESC" hint="MOD_DIGI_SHOWCASE_FIELD_MASONRY_PATTERN_HINT" />
+				
+                <field name="masonry-border-radius" type="size" extension="px" default="5" min="0" showon="mode:4" label="MOD_DIGI_SHOWCASE_FIELD_MASONRY_BORDER_RADIUS_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_MASONRY_BORDER_RADIUS_DESC" />
+                
+                <field name="masonry-tablet-switch" type="size" extension="px" default="960" min="768" max="1280" showon="mode:4" label="MOD_DIGI_SHOWCASE_FIELD_MASONRY_TABLET_SWITCH_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_MASONRY_TABLET_SWITCH_DESC" />
+                
+                <field name="masonry-smartphone-switch" type="size" extension="px" default="640" min="320" max="767" showon="mode:4" label="MOD_DIGI_SHOWCASE_FIELD_MASONRY_SMARTPHONE_SWITCH_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_MASONRY_SMARTPHONE_SWITCH_DESC" />
+                
+                <field type="spacer" name="filter-hr" hr="true" />
+                
+                <field type="spacer" name="filter" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_LAYOUT_FILTER" />
+                
+                <field name="filter-switch" type="radio" layout="joomla.form.field.radio.switcher" default="1" label="MOD_DIGI_SHOWCASE_FIELD_FILTER_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_FILTER_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+				
+				<field name="filter-group" type="radio" class="btn-group btn-group-yesno beta" labelclass="badge bg-warning" default="0" showon="filter-switch:1" label="MOD_DIGI_SHOWCASE_FIELD_FILTER_GROUP_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_FILTER_GROUP_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+				
+				<field name="filter-alignment" type="list" default="1" showon="filter-switch:1" label="MOD_DIGI_SHOWCASE_FIELD_FILTER_ALIGNMENT_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_FILTER_ALIGNMENT_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_LEFT</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_CENTER</option>
+                    <option value="2">MOD_DIGI_SHOWCASE_FIELD_RIGHT</option>
+				</field>
+				
+				<field name="filter-margin-wrapper" type="size" extension="px" class="margin" default="0 0 18 0" showon="filter-switch:1" label="MOD_DIGI_SHOWCASE_FIELD_FILTER_MARGIN_WRAPPER_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_FILTER_MARGIN_WRAPPER_DESC" />
+                
+                <field name="filter-margin-items" type="size" extension="px" class="margin" default="0 2 0 2" showon="filter-switch:1" label="MOD_DIGI_SHOWCASE_FIELD_FILTER_MARGIN_ITEMS_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_FILTER_MARGIN_ITEMS_DESC" />
+                
+                <field name="filter-justify" type="radio" layout="joomla.form.field.radio.switcher" default="0" showon="filter-switch:1" label="MOD_DIGI_SHOWCASE_FIELD_FILTER_JUSTIFY_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_FILTER_JUSTIFY_DESC">
+                	<option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+				
+                <field name="filter-background-color" type="color" default="#f5f5f5" showon="filter-switch:1" label="MOD_DIGI_SHOWCASE_FIELD_FILTER_BACKGROUND_COLOR_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_FILTER_BACKGROUND_COLOR_DESC" />
+                
+                <field name="filter-color" type="color" default="#333333" showon="filter-switch:1" label="MOD_DIGI_SHOWCASE_FIELD_FILTER_COLOR_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_FILTER_COLOR_DESC" />
+                
+                <field name="filter-background-hover-color" type="color" default="#005e8d" showon="filter-switch:1" label="MOD_DIGI_SHOWCASE_FIELD_FILTER_BACKGROUND_HOVER_COLOR_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_FILTER_BACKGROUND_HOVER_COLOR_DESC" />
+                
+                <field name="filter-hover-color" type="color" default="#ffffff" showon="filter-switch:1" label="MOD_DIGI_SHOWCASE_FIELD_FILTER_HOVER_COLOR_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_FILTER_HOVER_COLOR_DESC" />
+                
+                <field type="spacer" name="layout-padding-hr" hr="true" />
+                
+                <field type="spacer" name="layout-padding" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_LAYOUT_PADDING" />
+                
+                <field name="items-padding" type="size" extension="px" default="0 10 0 10" class="padding" label="MOD_DIGI_SHOWCASE_FIELD_ITEMS_PADDING_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_ITEMS_PADDING_DESC" />
+                
+                <field name="module-padding" type="size" extension="px" default="0 0 0 0" class="padding" label="MOD_DIGI_SHOWCASE_FIELD_MODULE_PADDING_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_MODULE_PADDING_DESC" />
+                
+                <field type="spacer" name="layout-custom-css-hr" hr="true" />
+                
+                <field type="spacer" name="layout-custom-css" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_LAYOUT_CUSTOM_CSS" />
+                
+                <field name="module-css" type="textarea" rows="5" cols="5" label="MOD_DIGI_SHOWCASE_FIELD_MODULE_CSS_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_MODULE_CSS_DESC" />
+                
+                <field name="items-css" type="textarea" rows="5" cols="5" label="MOD_DIGI_SHOWCASE_FIELD_ITEMS_CSS_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_ITEMS_CSS_DESC" />
+            </fieldset>
+			<fieldset name="articles_layout" label="MOD_DIGI_SHOWCASE_FIELDSET_ITEMS" addfieldpath="/modules/mod_digi_showcase/administrator/elements">
+                <field type="spacer" name="item-image" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_ITEM_IMAGE" />
+                
+				<field name="show-image" type="radio" layout="joomla.form.field.radio.switcher" default="1" label="MOD_DIGI_SHOWCASE_FIELD_SHOW_IMAGE_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_SHOW_IMAGE_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+                
+                <field name="image-type" type="list" default="3" showon="show-image:1[AND]data-source:0,1,2,99" label="MOD_DIGI_SHOWCASE_FIELD_IMAGE_TYPE_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_IMAGE_TYPE_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_INTRO_IMAGE</option>
+                    <option value="2">MOD_DIGI_SHOWCASE_FIELD_FULL_IMAGE</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_FIRST_IMAGE</option>
+                    <option value="3">MOD_DIGI_SHOWCASE_FIELD_SMART_IMAGE</option>
+				</field>
+                
+				<field name="show-placeholder-image" type="radio" layout="joomla.form.field.radio.switcher" default="1" showon="show-image:1" label="MOD_DIGI_SHOWCASE_FIELD_SHOW_PLACEHOLDER_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_SHOW_PLACEHOLDER_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+				
+				<field name="placeholder-image" type="media" showon="show-image:1[AND]show-placeholder-image:1" label="MOD_DIGI_SHOWCASE_FIELD_PLACEHOLDER_IMAGE_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_PLACEHOLDER_IMAGE_DESC" />
+                
+                <field name="generate-thumbnail" type="radio" layout="joomla.form.field.radio.switcher" default="0" showon="show-image:1" label="MOD_DIGI_SHOWCASE_FIELD_GENERATE_THUMBNAIL_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_GENERATE_THUMBNAIL_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+                
+				<field name="image-width" type="size" extension="px" showon="show-image:1[AND]generate-thumbnail:1" label="MOD_DIGI_SHOWCASE_FIELD_IMAGE_WIDTH_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_IMAGE_WIDTH_DESC" default="100" />
+                
+				<field name="image-height" type="size" extension="px" showon="show-image:1[AND]generate-thumbnail:1" label="MOD_DIGI_SHOWCASE_FIELD_IMAGE_HEIGHT_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_IMAGE_HEIGHT_DESC" default="100" />
+                
+                <field type="spacer" name="item-title-hr" hr="true" />
+                
+                <field type="spacer" name="item-title" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_ITEM_TITLE" />
+                
+				<field name="show-title" type="radio" layout="joomla.form.field.radio.switcher" default="1" label="MOD_DIGI_SHOWCASE_FIELD_SHOW_TITLE_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_SHOW_TITLE_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+				
+				<field name="title-characters" type="number" default="50" min="5" label="MOD_DIGI_SHOWCASE_FIELD_TITLE_CHARACTERS_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_TITLE_CHARACTERS_DESC" showon="show-title:1" />
+                
+                <field name="title-position" type="list" default="1" label="MOD_DIGI_SHOWCASE_FIELD_TITLE_POSITION_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_TITLE_POSITION_DESC" showon="show-title:1">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_TOP</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_BOTTOM</option>
+				</field>
+                
+                <field name="title-alignment" type="list" default="1" label="MOD_DIGI_SHOWCASE_FIELD_TITLE_ALIGNMENT_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_TITLE_ALIGNMENT_DESC" showon="show-title:1">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_LEFT</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_CENTER</option>
+                    <option value="2">MOD_DIGI_SHOWCASE_FIELD_RIGHT</option>
+				</field>
+				
+				<field name="title-tag" type="list" default="h3" label="MOD_DIGI_SHOWCASE_FIELD_TITLE_TAG_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_TITLE_TAG_DESC" showon="show-title:1">
+                    <option value="h1">MOD_DIGI_SHOWCASE_FIELD_H1</option>
+                    <option value="h2">MOD_DIGI_SHOWCASE_FIELD_H2</option>
+                    <option value="h3">MOD_DIGI_SHOWCASE_FIELD_H3</option>
+                    <option value="h4">MOD_DIGI_SHOWCASE_FIELD_H4</option>
+                    <option value="h5">MOD_DIGI_SHOWCASE_FIELD_H5</option>
+                    <option value="h6">MOD_DIGI_SHOWCASE_FIELD_H6</option>
+                    <option value="div">MOD_DIGI_SHOWCASE_FIELD_DIV</option>
+                    <option value="p">MOD_DIGI_SHOWCASE_FIELD_P</option>
+                    <option value="span">MOD_DIGI_SHOWCASE_FIELD_SPAN</option>
+				</field>
+				
+				<field type="spacer" name="description-hr" hr="true" />
+                
+                <field type="spacer" name="item-description" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_ITEM_TEXT" />
+                
+				<field name="show-description" type="radio" layout="joomla.form.field.radio.switcher" default="1" label="MOD_DIGI_SHOWCASE_FIELD_SHOW_TEXT_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_SHOW_TEXT_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+                
+                <field name="description-characters" type="number" default="100" min="5" label="MOD_DIGI_SHOWCASE_FIELD_TEXT_CHARACTERS_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_TEXT_CHARACTERS_DESC" showon="show-description:1" />
+                
+                <field name="text-position" type="list" default="1" label="MOD_DIGI_SHOWCASE_FIELD_TEXT_POSITION_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_TEXT_POSITION_DESC" showon="show-description:1">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_TOP</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_BOTTOM</option>
+				</field>
+                
+                <field name="text-alignment" type="list" default="1" label="MOD_DIGI_SHOWCASE_FIELD_TEXT_ALIGNMENT_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_TEXT_ALIGNMENT_DESC" showon="show-description:1">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_LEFT</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_CENTER</option>
+                    <option value="2">MOD_DIGI_SHOWCASE_FIELD_RIGHT</option>
+				</field>
+				
+				<field name="text-tag" type="list" default="p" label="MOD_DIGI_SHOWCASE_FIELD_TEXT_TAG_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_TEXT_TAG_DESC" showon="show-description:1">
+                    <option value="h1">MOD_DIGI_SHOWCASE_FIELD_H1</option>
+                    <option value="h2">MOD_DIGI_SHOWCASE_FIELD_H2</option>
+                    <option value="h3">MOD_DIGI_SHOWCASE_FIELD_H3</option>
+                    <option value="h4">MOD_DIGI_SHOWCASE_FIELD_H4</option>
+                    <option value="h5">MOD_DIGI_SHOWCASE_FIELD_H5</option>
+                    <option value="h6">MOD_DIGI_SHOWCASE_FIELD_H6</option>
+                    <option value="div">MOD_DIGI_SHOWCASE_FIELD_DIV</option>
+                    <option value="p">MOD_DIGI_SHOWCASE_FIELD_P</option>
+                    <option value="span">MOD_DIGI_SHOWCASE_FIELD_SPAN</option>
+				</field>
+				
+				<field name="strip-html-text" type="radio" layout="joomla.form.field.radio.switcher" default="1" label="MOD_DIGI_SHOWCASE_FIELD_TEXT_STRIP_HTML_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_TEXT_STRIP_HTML_DESC" showon="show-description:1">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+                
+                <field type="spacer" name="item-read-more-hr" hr="true" showon="show-description:1[AND]link-switch:1" />
+                
+                <field type="spacer" name="item-read-more" class="title" showon="show-description:1[AND]link-switch:1" label="MOD_DIGI_SHOWCASE_SEPARATOR_ITEM_READ_MORE" />
+                
+                <field name="readmore" type="radio" layout="joomla.form.field.radio.switcher" default="0" showon="show-description:1[AND]link-switch:1" label="MOD_DIGI_SHOWCASE_FIELD_SHOW_READMORE_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_SHOW_READMORE_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+                
+                <field name="readmore-text" type="text" default="Read more..." showon="show-description:1[AND]readmore:1[AND]link-switch:1" label="MOD_DIGI_SHOWCASE_FIELD_READMORE_TEXT_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_READMORE_TEXT_DESC" filter="string" />
+                
+                <field name="readmore-style" type="list" default="1" showon="show-description:1[AND]readmore:1[AND]link-switch:1" label="MOD_DIGI_SHOWCASE_FIELD_READMORE_STYLE_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_READMORE_STYLE_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_READMORE_CLASS_DEFAULT</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_READMORE_CLASS_CUSTOM</option>
+				</field>
+                
+                <field name="readmore-class" type="text" showon="show-description:1[AND]readmore:1[AND]link-switch:1[AND]readmore-style:1" label="MOD_DIGI_SHOWCASE_FIELD_READMORE_CLASS_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_READMORE_CLASS_DESC" filter="string" />
+				
+				<field type="spacer" name="category-hr" hr="true" />
+                
+                <field type="spacer" name="category" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_ITEM_CATEGORY" />
+                
+				<field name="show-category" type="radio" layout="joomla.form.field.radio.switcher" default="0" label="MOD_DIGI_SHOWCASE_FIELD_SHOW_CATEGORY_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_SHOW_CATEGORY_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+                
+                <field name="category-position" type="list" default="1" showon="show-category:1" label="MOD_DIGI_SHOWCASE_FIELD_CATEGORY_POSITION_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_CATEGORY_POSITION_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_TOP</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_BOTTOM</option>
+				</field>
+                
+                <field name="category-alignment" type="list" default="1" showon="show-category:1" label="MOD_DIGI_SHOWCASE_FIELD_CATEGORY_ALIGNMENT_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_CATEGORY_ALIGNMENT_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_LEFT</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_CENTER</option>
+                    <option value="2">MOD_DIGI_SHOWCASE_FIELD_RIGHT</option>
+				</field>
+				
+				<field name="category-tag" type="list" default="h4" showon="show-category:1" label="MOD_DIGI_SHOWCASE_FIELD_CATEGORY_TAG_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_CATEGORY_TAG_DESC">
+                    <option value="h1">MOD_DIGI_SHOWCASE_FIELD_H1</option>
+                    <option value="h2">MOD_DIGI_SHOWCASE_FIELD_H2</option>
+                    <option value="h3">MOD_DIGI_SHOWCASE_FIELD_H3</option>
+                    <option value="h4">MOD_DIGI_SHOWCASE_FIELD_H4</option>
+                    <option value="h5">MOD_DIGI_SHOWCASE_FIELD_H5</option>
+                    <option value="h6">MOD_DIGI_SHOWCASE_FIELD_H6</option>
+                    <option value="div">MOD_DIGI_SHOWCASE_FIELD_DIV</option>
+                    <option value="p">MOD_DIGI_SHOWCASE_FIELD_P</option>
+                    <option value="span">MOD_DIGI_SHOWCASE_FIELD_SPAN</option>
+				</field>
+				
+				<field type="spacer" name="extra-info-hr" hr="true" />
+                
+                <field type="spacer" name="extra-info" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_ITEM_EXTRA_INFO" />
+                
+				<field name="show-extra-info" type="radio" layout="joomla.form.field.radio.switcher" default="1" label="MOD_DIGI_SHOWCASE_FIELD_SHOW_EXTRA_INFO_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_SHOW_EXTRA_INFO_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+                
+                <field name="extra-info-position" type="list" default="1" showon="show-extra-info:1" label="MOD_DIGI_SHOWCASE_FIELD_EXTRA_INFO_POSITION_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_EXTRA_INFO_POSITION_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_TOP</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_BOTTOM</option>
+				</field>
+                
+                <field name="extra-info-alignment" type="list" default="1" showon="show-extra-info:1" label="MOD_DIGI_SHOWCASE_FIELD_EXTRA_INFO_ALIGNMENT_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_EXTRA_INFO_ALIGNMENT_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_LEFT</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_CENTER</option>
+                    <option value="2">MOD_DIGI_SHOWCASE_FIELD_RIGHT</option>
+				</field>
+				
+				<field name="extra-info-tag" type="list" default="p" label="MOD_DIGI_SHOWCASE_FIELD_EXTRA_INFO_TAG_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_EXTRA_INFO_TAG_DESC" showon="show-extra-info:1">
+                    <option value="h1">MOD_DIGI_SHOWCASE_FIELD_H1</option>
+                    <option value="h2">MOD_DIGI_SHOWCASE_FIELD_H2</option>
+                    <option value="h3">MOD_DIGI_SHOWCASE_FIELD_H3</option>
+                    <option value="h4">MOD_DIGI_SHOWCASE_FIELD_H4</option>
+                    <option value="h5">MOD_DIGI_SHOWCASE_FIELD_H5</option>
+                    <option value="h6">MOD_DIGI_SHOWCASE_FIELD_H6</option>
+                    <option value="div">MOD_DIGI_SHOWCASE_FIELD_DIV</option>
+                    <option value="p">MOD_DIGI_SHOWCASE_FIELD_P</option>
+                    <option value="span">MOD_DIGI_SHOWCASE_FIELD_SPAN</option>
+				</field>
+				
+				<field type="spacer" name="item-link-hr" hr="true" />
+                
+                <field type="spacer" name="item-link" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_ITEM_LINK" />
+                
+                <field name="link-switch" type="radio" layout="joomla.form.field.radio.switcher" default="1" label="MOD_DIGI_SHOWCASE_FIELD_LINK_SWITCH_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_LINK_SWITCH_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+                
+                <field name="link-alias" type="radio" layout="joomla.form.field.radio.switcher" default="1" showon="link-switch:1[AND]data-source:0,1,2,99" label="MOD_DIGI_SHOWCASE_FIELD_LINK_ALIAS_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_LINK_ALIAS_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+                
+                <field name="link-category" type="radio" layout="joomla.form.field.radio.switcher" default="1" showon="link-switch:1[AND]data-source:0,1,2,99" label="MOD_DIGI_SHOWCASE_FIELD_LINK_CATEGORY_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_LINK_CATEGORY_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+                
+                <field name="link-item" type="radio" layout="joomla.form.field.radio.switcher" default="1" showon="link-switch:1[AND]data-source:0,1,2,99" label="MOD_DIGI_SHOWCASE_FIELD_LINK_ITEM_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_LINK_ITEM_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+				
+				<field name="forced-link-item-switch" type="radio" layout="joomla.form.field.radio.switcher" default="0" showon="link-switch:1[AND]data-source:0,1,2,99" label="MOD_DIGI_SHOWCASE_FIELD_FORCED_LINK_ITEM_SWITCH_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_FORCED_LINK_ITEM_SWITCH_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+                
+                <field name="forced-link-item" type="menuitem" default="" showon="link-switch:1[AND]forced-link-item-switch:1[AND]data-source:0,1,2,99" label="MOD_DIGI_SHOWCASE_FIELD_FORCED_LINK_ITEM_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_FORCED_LINK_ITEM_DESC" />
+                
+                <field type="spacer" name="articles-background-hr" hr="true" />
+                
+                <field type="spacer" name="articles-background" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_ITEMS_BACKGROUND" />
+                
+                <field name="items-background-switch" type="radio" layout="joomla.form.field.radio.switcher" default="0" label="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_SWITCH_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_SWITCH_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+                
+                <field name="items-background-type" type="list" default="0" showon="items-background-switch:1" label="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_TYPE_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_TYPE_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_COLOR</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_IMAGE</option>
+				</field>
+                
+                <field name="items-background-image-type" type="list" default="0" showon="items-background-switch:1[AND]items-background-type:1" label="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_IMAGE_TYPE_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_IMAGE_TYPE_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_SELECT_IMAGE</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_ITEM_IMAGE</option>
+				</field>
+                
+                <field name="items-background-image" type="media" showon="items-background-switch:1[AND]items-background-type:1[AND]items-background-image-type:0" label="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_IMAGE_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_IMAGE_DESC" />
+                
+                <field name="items-background-custom-color" type="color" default="" showon="items-background-switch:1[AND]items-background-type:0" label="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_COLOR_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_COLOR_DESC" />
+                
+                <field type="spacer" name="items-appearance-hr" hr="true" />
+                
+                <field type="spacer" name="items-appearance" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_ITEMS_APPEARANCE" />
+                
+                <field name="items-background-overlay" type="radio" layout="joomla.form.field.radio.switcher" default="0" label="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_OVERLAY_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_OVERLAY_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+				</field>
+				
+				<field name="items-background-overlay-color" type="color" default="#000000" showon="items-background-overlay:1" label="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_OVERLAY_COLOR_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_OVERLAY_COLOR_DESC" />
+                
+                <field name="items-background-overlay-text-color" type="color" default="#ffffff" showon="items-background-overlay:1" label="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_OVERLAY_TEXT_COLOR_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_OVERLAY_TEXT_COLOR_DESC" />
+                
+                <field name="items-background-overlay-opacity" type="range" min="0.1" max="1" step="0.1" default="0.7" showon="items-background-overlay:1" label="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_OVERLAY_OPACITY_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_OVERLAY_OPACITY_DESC" />
+                
+                <field name="items-background-overlay-content-opacity" type="range" min="0.1" max="1" step="0.1" default="0.4" showon="items-background-overlay:1" label="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_OVERLAY_CONTENT_OPACITY_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_OVERLAY_CONTENT_OPACITY_DESC" />
+                
+                <field name="items-background-overlay-transition" type="interval" extension="s" default="0.3" min="0" max="2" step="0.1" showon="items-background-overlay:1" label="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_OVERLAY_TRANSITION_TIME_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_OVERLAY_TRANSITION_TIME_DESC" />
+			</fieldset>
+            <fieldset name="advanced" label="MOD_DIGI_SHOWCASE_FIELDSET_ADVANCED_OPTIONS" addfieldpath="/modules/mod_digi_showcase/administrator/elements">
+                <field type="spacer" name="libraries-inclusion" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_LIBRARIES_INCLUSION" />
+                
+                <field name="jquery-no-conflict-switch" type="radio" layout="joomla.form.field.radio.switcher" default="0" label="MOD_DIGI_SHOWCASE_FIELD_JQUERY_NO_CONFLICT_SWITCH_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_JQUERY_NO_CONFLICT_SWITCH_DESC">
+                    <option value="0">MOD_DIGI_SHOWCASE_FIELD_NO</option>
+                    <option value="1">MOD_DIGI_SHOWCASE_FIELD_YES</option>
+                </field>
+                
+                <field type="spacer" name="advanced-others-hr" hr="true" />
+                
+                <field type="spacer" name="advanced-others" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_ADVANCED_OTHERS" />
+                
+				<field name="layout" type="modulelayout" class="form-select" label="JFIELD_ALT_LAYOUT_LABEL" description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
+                
+				<field name="moduleclass_sfx" type="text" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" />
+                
+				<field name="cache" type="list" default="1" label="COM_MODULES_FIELD_CACHING_LABEL">
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+                 
+				<field name="cache_time" type="text" default="900" label="COM_MODULES_FIELD_CACHE_TIME_LABEL" />
+                   
+				<field name="cachemode" type="hidden" default="itemid">
+					<option value="itemid"></option>
+				</field>
+			</fieldset>
+			<fieldset name="backup" label="MOD_DIGI_SHOWCASE_FIELDSET_BACKUP" addfieldpath="/modules/mod_digi_showcase/administrator/elements">
+				
+                <field name="backup_hidden" type="backup" />         
+                
+            </fieldset>
+            
+            <fieldset name="extra_features" label="MOD_DIGI_SHOWCASE_FIELDSET_EXTRA_FEATURES" addfieldpath="/modules/mod_digi_showcase/administrator/elements">           
+                
+                <field name="extra_data_source_hidden" type="digishowcaseeds" />
+                
+                <field name="customization_hidden" type="digishowcasecstm" /> 
+                
+            </fieldset>
+		</fields>
+	</config>
+    <updateservers>
+    	
+        <server type="extension" priority="2" name="Digi Showcase">https://www.digigreg.com/xml/mod_digi_showcase.xml</server>
+        
+    </updateservers>
+</extension>
