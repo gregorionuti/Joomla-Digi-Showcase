@@ -23,13 +23,29 @@ If Joomla articles are not enough, you can expand Digi Showcase with its Expansi
 ![Static Badge](https://img.shields.io/badge/module-orangered?logo=joomla&logoColor=white&label=type)
 ![Static Badge](https://img.shields.io/badge/7.0%2B%20%7C%208.0%2B-purple?logo=php&logoColor=white&label=php)
 
+---
+
 #### Links
 - :link: [Project homepage](https://www.digigreg.com/en/products/joomla-modules/digi-showcase.html)
 - :link: [JED page](https://extensions.joomla.org/extension/digi-showcase/)
 - :book: [Documentation](https://www.digigreg.com/en/wiki/digi-showcase.html)
+- :speech_balloon: [Discord server](https://discord.gg/VCtqbgjERH)
+
+---
+
+#### Support
+:coffee: Did you find it useful? You might consider buying me a coffee :blush:
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z4U0RY9)
+
+Thanks for all the caffeine :coffee: :coffee: :coffee:
+
+---
 
 #### Contributing
 Pull requests with bugfixes and translations are much appreciated. I'll be happy to review them and merge them once they're ready.
+
+---
 
 #### Images
 ![Digi Showcase normal mode](https://www.digigreg.com/images/stories/products-descriptions/digi-showcase/digi-showcase-normal-mode.jpg)
