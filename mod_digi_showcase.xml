@@ -3,11 +3,11 @@
 	<identifier>mod://site/digi_showcase</identifier>
 	<name>MOD_DIGI_SHOWCASE</name>
 	<author>Digigreg</author>
-	<creationDate>Feb 2024</creationDate>
+	<creationDate>Mar 2024</creationDate>
 	<copyright>Copyright Digigreg 2014-2024</copyright>
 	<authorEmail>info@digigreg.com</authorEmail>
 	<authorUrl>https://www.digigreg.com</authorUrl>
-	<version>2.2.1</version>
+	<version>2.2.2</version>
     <license>GNU General Public License version 2 or later</license>
 	<description>MOD_DIGI_SHOWCASE_XML_DESCRIPTION</description>
 	<scriptfile>script.php</scriptfile>
@@ -45,7 +45,7 @@
                 
                 <field name="asset_hidden" type="asset" />
                 
-                <field name="module_version" type="hidden" default="2.2.1" />
+                <field name="module_version" type="hidden" default="2.2.2" />
         	</fieldset>
 			<fieldset name="basic_options" label="MOD_DIGI_SHOWCASE_FIELDSET_BASIC_OPTIONS" addfieldpath="/modules/mod_digi_showcase/administrator/elements">
 				<field type="spacer" name="wizard" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_WIZARD" />
