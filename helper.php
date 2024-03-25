@@ -61,7 +61,7 @@ class Digi_Showcase_Helper {
 	private $items;
 	
 	// construct
-	public function __construct($dataSource=0, $dataFilter=0, $rows=1, $columns=1, 
+	public function __construct($dataSource, $dataFilter, $rows, $columns, 
 								$itemsQty, $mode, $orderBy, $orderType, 
 								$showImage, $generateThumbnail, $imageWidth, $imageHeight, 
 								$showTitle, $titleCharacters, 

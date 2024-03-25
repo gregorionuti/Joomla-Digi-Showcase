@@ -166,14 +166,19 @@ class JFormFieldDigishowcasewizard extends JFormField {
         $extension_id = $uri->getVar('id', 'none');
         $task = $uri->getVar('wizard_task', 'none');
         
-// get module data from database
+		// if $extension_id == 'none' means that the module is a new instance and it has not been saved yet
+		if ($extension_id !== 'none' && is_numeric($extension_id)) {
+		
+			// get module data from database
 			$dbo = Factory::getDBO();
 			$query = 'SELECT params FROM '.$db_table.' WHERE '.$db_column.' = '.$extension_id.' LIMIT 1';	
-            $dbo->setQuery($query);
-            $params = $dbo->loadObject();
+			$dbo->setQuery($query);
+			$params = $dbo->loadObject();
 			
 			// replace params
 			$params = json_decode($params->params);
+		
+		}
         
         // if url contains proper variables
 		if ($extension_id !== 'none' && is_numeric($extension_id) && $task !== 'none') {
