@@ -15,10 +15,6 @@ defined('_JEXEC') or die;
 // define ds variable for joomla 3 compatibility
 if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 
-// namespaces
-use Joomla\CMS\Factory;
-use Joomla\CMS\Uri\Uri;
-
 jimport('joomla.filesystem.file');
 
 class JFormFieldXml extends JFormField {
@@ -27,12 +23,10 @@ class JFormFieldXml extends JFormField {
     
     protected function getInput() {
         
-        // include digigreg api
-        include_once "digigreg_api.php";
-        
-        // general variables and joomla classes
-        $uri = Uri::getInstance();
-        $joomlaVersion = getJoomlaVersion();
+        // General variables
+        $uri = JUri::getInstance();
+    	$document = JFactory::getDocument();
+        $joomlaVersion = JVERSION;
         
         // get the variable from the current url tp execute the update or not
         $execute = $uri->getVar('execute');
@@ -44,7 +38,7 @@ class JFormFieldXml extends JFormField {
 			if (!version_compare($joomlaVersion, "4.0.0", ">=")) {
 			
 				// module folder
-				$basePath = str_replace('administrator'.DS.'elements', '', dirname(__FILE__)).DS;
+				$basePath = str_replace('extras'.DS.'elements', '', dirname(__FILE__)).DS;
 		
 				// get module manifest file content
 				$xmlFile = file_get_contents($basePath.'mod_digi_showcase.xml');
@@ -81,7 +75,7 @@ class JFormFieldXml extends JFormField {
 			if (!version_compare($joomlaVersion, "4.0.0", ">=")) {
 				
 				// module folder
-				$basePath = str_replace('administrator'.DS.'elements', '', dirname(__FILE__)).DS;
+				$basePath = str_replace('extras'.DS.'elements', '', dirname(__FILE__)).DS;
 		
 				// get module manifest file content
 				$xmlFile = file_get_contents($basePath.'mod_digi_showcase.xml');

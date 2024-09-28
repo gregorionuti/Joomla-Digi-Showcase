@@ -3,11 +3,10 @@
 	<identifier>mod://site/digi_showcase</identifier>
 	<name>MOD_DIGI_SHOWCASE</name>
 	<author>Digigreg</author>
-	<creationDate>Mar 2024</creationDate>
+	<creationDate>Sep 2024</creationDate>
 	<copyright>Copyright Digigreg 2014-2024</copyright>
-	<authorEmail>info@digigreg.com</authorEmail>
 	<authorUrl>https://www.digigreg.com</authorUrl>
-	<version>2.2.2</version>
+	<version>2.3.0</version>
     <license>GNU General Public License version 2 or later</license>
 	<description>MOD_DIGI_SHOWCASE_XML_DESCRIPTION</description>
 	<scriptfile>script.php</scriptfile>
@@ -15,11 +14,10 @@
 		<filename module="mod_digi_showcase">mod_digi_showcase.php</filename>
         <filename>helper.php</filename>
 		<filename>mod_digi_showcase.xml</filename>
-        <folder>administrator</folder>
         <folder>assets</folder>
+        <folder>extras</folder>
         <folder>images</folder>
         <folder>include</folder>
-        <folder>settings</folder>
 		<folder>tmpl</folder>
 	</files>
     <languages folder="language">
@@ -31,23 +29,25 @@
 		<language tag="de-DE">de-DE/de-DE.mod_digi_showcase.sys.ini</language>
 		<language tag="ja-JP">ja-JP/ja-JP.mod_digi_showcase.ini</language>
 		<language tag="ja-JP">ja-JP/ja-JP.mod_digi_showcase.sys.ini</language>
-	    	<language tag="nl-NL">nl-NL/nl-NL.mod_digi_showcase.ini</language>
+		<language tag="nl-NL">nl-NL/nl-NL.mod_digi_showcase.ini</language>
 		<language tag="nl-NL">nl-NL/nl-NL.mod_digi_showcase.sys.ini</language>
 	</languages>
     <config>
 		<fields name="params">
-            <fieldset name="basic" label="MOD_DIGI_SHOWCASE_FIELDSET_BASIC_OPTIONS" addfieldpath="/modules/mod_digi_showcase/administrator/elements">
+            <fieldset name="basic" label="MOD_DIGI_SHOWCASE_FIELDSET_BASIC_OPTIONS" addfieldpath="/modules/mod_digi_showcase/extras/elements">
                 <field name="xml_hidden" type="xml" />
                 
-                <field name="share-me_hidden" type="shareme" />
+                <field name="buttons_hidden" type="buttons" />
                 
-                <field name="advertising_hidden" type="digishowcaseadv" />
+                <field name="donation_hidden" type="donation" />
+                
+                <field name="support_hidden" type="support" />
                 
                 <field name="asset_hidden" type="asset" />
                 
-                <field name="module_version" type="hidden" default="2.2.2" />
+                <field name="module_version" type="hidden" default="2.3.0" />
         	</fieldset>
-			<fieldset name="basic_options" label="MOD_DIGI_SHOWCASE_FIELDSET_BASIC_OPTIONS" addfieldpath="/modules/mod_digi_showcase/administrator/elements">
+			<fieldset name="basic_options" label="MOD_DIGI_SHOWCASE_FIELDSET_BASIC_OPTIONS" addfieldpath="/modules/mod_digi_showcase/extras/elements">
 				<field type="spacer" name="wizard" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_WIZARD" />
 				
 				<field name="show-wizard" type="radio" layout="joomla.form.field.radio.switcher" default="1" label="MOD_DIGI_SHOWCASE_FIELD_SHOW_WIZARD_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_SHOW_WIZARD_DESC">
@@ -66,6 +66,7 @@
                 	<option value="1">MOD_DIGI_SHOWCASE_FIELD_JOOMLA_TAGS</option>
                 	<option value="2">MOD_DIGI_SHOWCASE_FIELD_JOOMLA_ARTICLES</option>
                 	<option value="50">MOD_DIGI_SHOWCASE_FIELD_CUSTOM_CSV</option>
+                	<option value="51">MOD_DIGI_SHOWCASE_FIELD_RANDOM_DATA</option>
                 	<option value="99">MOD_DIGI_SHOWCASE_FIELD_EXPANSION_PACKS</option>
 				</field>
                 
@@ -143,7 +144,7 @@
                     <option value="1">MOD_DIGI_SHOWCASE_FIELD_ORDER_DESCENDING</option>
 				</field>
 			</fieldset>
-            <fieldset name="module_layout" label="MOD_DIGI_SHOWCASE_FIELDSET_LAYOUT" addfieldpath="/modules/mod_digi_showcase/administrator/elements">
+            <fieldset name="module_layout" label="MOD_DIGI_SHOWCASE_FIELDSET_LAYOUT" addfieldpath="/modules/mod_digi_showcase/extras/elements">
             	<field type="spacer" name="layout-features" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_LAYOUT_FEATURES" />
                 
 				<field name="include-title-inside" type="radio" layout="joomla.form.field.radio.switcher" default="0" label="MOD_DIGI_SHOWCASE_FIELD_INCLUDE_TITLE_INSIDE_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_INCLUDE_TITLE_INSIDE_DESC">
@@ -358,7 +359,7 @@
                 
                 <field name="items-css" type="textarea" rows="5" cols="5" label="MOD_DIGI_SHOWCASE_FIELD_ITEMS_CSS_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_ITEMS_CSS_DESC" />
             </fieldset>
-			<fieldset name="articles_layout" label="MOD_DIGI_SHOWCASE_FIELDSET_ITEMS" addfieldpath="/modules/mod_digi_showcase/administrator/elements">
+			<fieldset name="articles_layout" label="MOD_DIGI_SHOWCASE_FIELDSET_ITEMS" addfieldpath="/modules/mod_digi_showcase/extras/elements">
                 <field type="spacer" name="item-image" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_ITEM_IMAGE" />
                 
 				<field name="show-image" type="radio" layout="joomla.form.field.radio.switcher" default="1" label="MOD_DIGI_SHOWCASE_FIELD_SHOW_IMAGE_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_SHOW_IMAGE_DESC">
@@ -617,7 +618,7 @@
                 
                 <field name="items-background-overlay-transition" type="interval" extension="s" default="0.3" min="0" max="2" step="0.1" showon="items-background-overlay:1" label="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_OVERLAY_TRANSITION_TIME_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_BACKGROUND_OVERLAY_TRANSITION_TIME_DESC" />
 			</fieldset>
-            <fieldset name="advanced" label="MOD_DIGI_SHOWCASE_FIELDSET_ADVANCED_OPTIONS" addfieldpath="/modules/mod_digi_showcase/administrator/elements">
+            <fieldset name="advanced" label="MOD_DIGI_SHOWCASE_FIELDSET_ADVANCED_OPTIONS" addfieldpath="/modules/mod_digi_showcase/extras/elements">
                 <field type="spacer" name="libraries-inclusion" class="title" label="MOD_DIGI_SHOWCASE_SEPARATOR_LIBRARIES_INCLUSION" />
                 
                 <field name="jquery-no-conflict-switch" type="radio" layout="joomla.form.field.radio.switcher" default="0" label="MOD_DIGI_SHOWCASE_FIELD_JQUERY_NO_CONFLICT_SWITCH_LABEL" description="MOD_DIGI_SHOWCASE_FIELD_JQUERY_NO_CONFLICT_SWITCH_DESC">
@@ -644,17 +645,12 @@
 					<option value="itemid"></option>
 				</field>
 			</fieldset>
-			<fieldset name="backup" label="MOD_DIGI_SHOWCASE_FIELDSET_BACKUP" addfieldpath="/modules/mod_digi_showcase/administrator/elements">
-				
-                <field name="backup_hidden" type="backup" />         
-                
-            </fieldset>
             
-            <fieldset name="extra_features" label="MOD_DIGI_SHOWCASE_FIELDSET_EXTRA_FEATURES" addfieldpath="/modules/mod_digi_showcase/administrator/elements">           
+            <fieldset name="extra_features" label="MOD_DIGI_SHOWCASE_FIELDSET_EXTRA_FEATURES" addfieldpath="/modules/mod_digi_showcase/extras/elements">           
+                
+                <field name="adv_hidden" type="digishowcaseadv" />
                 
                 <field name="extra_data_source_hidden" type="digishowcaseeds" />
-                
-                <field name="customization_hidden" type="digishowcasecstm" /> 
                 
             </fieldset>
 		</fields>

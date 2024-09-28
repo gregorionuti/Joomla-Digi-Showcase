@@ -15,9 +15,6 @@ defined('_JEXEC') or die;
 // define ds variable for joomla 3 compatibility
 if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 
-// namespaces
-use Joomla\CMS\Uri\Uri;
-
 jimport('joomla.filesystem.file');
 
 class JFormFieldDigishowcaseeds extends JFormField {
@@ -25,12 +22,9 @@ class JFormFieldDigishowcaseeds extends JFormField {
     
     protected function getInput() {
     	
-    	// include digigreg api
-        include_once "digigreg_api.php";
-    	
-    	// general variables
+    	// General variables
     	$document = JFactory::getDocument();
-    	$joomlaVersion = getJoomlaVersion();
+        $joomlaVersion = JVERSION;
     	
     	// specific classes and styles based on joomla version
     	if (version_compare($joomlaVersion, "4.0.0", ">=")) {
@@ -69,7 +63,7 @@ class JFormFieldDigishowcaseeds extends JFormField {
 			#extra_data_source_form {
 				background-color: #8e44ad;
 				border-color: #8e44ad;
-				background-image: url("'.URI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'pattern-eds.png");
+				background-image: url("'.JURI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'pattern-eds.png");
 				background-repeat: repeat;
 			}
 			#extra_data_source_form a[target="_blank"]::before {
@@ -114,7 +108,7 @@ class JFormFieldDigishowcaseeds extends JFormField {
         // virtuemart
         $html .= '<div id="extra_data_source_virtuemart_categories" class="'.$card_class.' text-center">';
         $html .= '<div class="card-body">';
-        $html .= '<a href="https://www.digigreg.com/en/products/joomla-plugins/digi-showcase-plugins/digi-showcase-virtuemart-categories.html" target="_blank"><img class="card-img-top" alt="Virtuemart Categories" src="'.URI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'extra-data-source-virtuemart-categories.png"></a>';
+        $html .= '<a href="https://www.digigreg.com/en/products/joomla-plugins/digi-showcase-plugins/digi-showcase-virtuemart-categories.html" target="_blank"><img class="card-img-top" alt="Virtuemart Categories" src="'.JURI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'extra-data-source-virtuemart-categories.png"></a>';
         $html .= '<p class="'.$card_text_class.'"><a href="https://www.digigreg.com/en/products/joomla-plugins/digi-showcase-plugins/digi-showcase-virtuemart-categories.html" target="_blank">Virtuemart Categories</a></p>';
         $html .= '</div>';
         $html .= '</div>';
@@ -122,7 +116,7 @@ class JFormFieldDigishowcaseeds extends JFormField {
         // users
         $html .= '<div id="extra_data_source_joomla_users" class="'.$card_class.' text-center">';
         $html .= '<div class="card-body">';
-        $html .= '<a href="https://www.digigreg.com/en/products/joomla-plugins/digi-showcase-plugins/digi-showcase-joomla-users.html" target="_blank"><img class="card-img-top" alt="Joomla Users" src="'.URI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'extra-data-source-joomla-users.png"></a>';
+        $html .= '<a href="https://www.digigreg.com/en/products/joomla-plugins/digi-showcase-plugins/digi-showcase-joomla-users.html" target="_blank"><img class="card-img-top" alt="Joomla Users" src="'.JURI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'extra-data-source-joomla-users.png"></a>';
         $html .= '<p class="'.$card_text_class.'"><a href="https://www.digigreg.com/en/products/joomla-plugins/digi-showcase-plugins/digi-showcase-joomla-users.html" target="_blank">Joomla Users</a></p>';
         $html .= '</div>';
         $html .= '</div>';
@@ -130,7 +124,7 @@ class JFormFieldDigishowcaseeds extends JFormField {
         // login to your account
         $html .= '<div id="extra_data_source_go_to_your_account" class="'.$card_class.' text-center">';
         $html .= '<div class="card-body">';
-        $html .= '<a href="https://www.digigreg.com/en/login.html" target="_blank"><img class="card-img-top" alt="Joomla Users" src="'.URI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'go-to-your-account.png"></a>';
+        $html .= '<a href="https://www.digigreg.com/en/login.html" target="_blank"><img class="card-img-top" alt="Joomla Users" src="'.JURI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'go-to-your-account.png"></a>';
         $html .= '<p class="'.$card_text_class.'"><a href="https://www.digigreg.com/en/login.html" target="_blank">'.JText::_('MOD_DIGI_SHOWCASE_FIELD_GO_TO_YOUR_ACCOUNT_TITLE').'</a></p>';
         $html .= '</div>';
         $html .= '</div>';

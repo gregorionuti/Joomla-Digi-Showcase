@@ -17,6 +17,7 @@ if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 
 // namespaces
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Language\Text;
 
 // include other files with the right path depending if this helper is an override or it's the default one
 if (file_exists(dirname(__DIR__, 1).DS.'override'.DS.'helper.php')) {
@@ -25,13 +26,13 @@ if (file_exists(dirname(__DIR__, 1).DS.'override'.DS.'helper.php')) {
 		require_once dirname(__DIR__, 1).DS.'include'.DS.'simple_html_dom.php';
 	}
 	require_once dirname(__DIR__, 1).DS.'include'.DS.'image_resizer.php';
-	include_once dirname(__DIR__, 1).DS.'administrator'.DS.'elements'.DS.'digigreg_api.php';
+	include_once dirname(__DIR__, 1).DS.'extras'.DS.'elements'.DS.'digigreg_api.php';
 } else {
 	if (!function_exists('str_get_html')) {
 		require_once dirname(__FILE__).DS.'include'.DS.'simple_html_dom.php';
 	}
 	require_once dirname(__FILE__).DS.'include'.DS.'image_resizer.php';
-	include_once dirname(__FILE__).DS.'administrator'.DS.'elements'.DS.'digigreg_api.php';
+	include_once dirname(__FILE__).DS.'extras'.DS.'elements'.DS.'digigreg_api.php';
 }
 
 class Digi_Showcase_Helper {
@@ -213,6 +214,9 @@ class Digi_Showcase_Helper {
 			}
 		} else if ($source == 50) {
 			// data source is custom csv
+			$link = $itemLink;
+		} else if ($source == 51) {
+			// data source is random content
 			$link = $itemLink;
 		} else if ($source == 99) {
 			// load expansion pack
@@ -402,8 +406,8 @@ class Digi_Showcase_Helper {
 			
 			$html .= '<ul id="digi_showcase_filter" class="'.$class.'">';
 	
-			$html .= '<li class="nav-item active '.$keyword.'-all"><a class="nav-link" href="#" title="'.$keyword.'-all">'.jText::_('MOD_DIGI_SHOWCASE_FIELD_FILTER_ALL_LABEL').'</a></li>';
-	
+			$html .= '<li class="nav-item active '.$keyword.'-all"><a class="nav-link" href="#" title="'.$keyword.'-all">'.Text::_('MOD_DIGI_SHOWCASE_FIELD_FILTER_ALL_LABEL').'</a></li>';
+			
 			if ($data) {
 				
 				// declare an array to avoid duplicates
@@ -438,6 +442,15 @@ class Digi_Showcase_Helper {
 								$push = 1;
 							} else {
 								$filterTitle = Digi_Showcase_Helper::getCustomCSVTitle($filter,$raw);
+							}
+						} else if ($source == 51) {
+							// data source is random content
+							if ($group) {
+								$filterTitle = Digi_Showcase_Helper::randomCategory();
+								$filter = str_replace(' ', '-', strtolower($filterTitle));
+								$push = 1;
+							} else {
+								$filterTitle = Digi_Showcase_Helper::getRandomDataTitle($filter,$raw);
 							}
 						} else if ($source == 99) {
 							// load external plugins
@@ -835,6 +848,32 @@ class Digi_Showcase_Helper {
         return $data;
 	}
 	
+	// get items data from random content
+	private function getRandomContentData($item) {
+		
+		// get random data
+        $id = $item['id'];
+        $title = $item['title'];
+        $category = $item['category'];
+        $content = $item['content'];
+        $image = $item['image'];
+        $extraInfo = $item['extra-info'];
+        $link = $item['link'];
+		
+		// build the item array which contain all parsed data
+        $data = array(
+                'id'=>$id,
+                'title'=>$this->truncateSentence($title, $this->title_characters, 0),
+                'category'=>$category,
+                'content'=>$this->truncateSentence($content, $this->description_characters, $this->strip_html_text),
+                'extra-info'=>$extraInfo,
+                'image'=>$image,
+                'link'=>trim(str_replace(PHP_EOL, '', $link))
+                );
+        
+        return $data;
+	}
+	
 	
 /**
  * 
@@ -1066,6 +1105,72 @@ class Digi_Showcase_Helper {
 		return $this->items;
 	}
 	
+	// get random data
+	public function getRandomData() {
+		
+		// define and manage the offset
+		$offset = $this->items_offset;
+		$itemsQty = $this->items_qty;
+				
+		for ($i = 0; $i < $itemsQty; $i++){
+			
+			$itemArr = ['id'=>$i, 'title'=>$this->randomData(20), 'category'=>$this->randomCategory(), 'content'=>$this->randomContent(300), 'image'=>'', 'extra-info'=>$this->randomExtra(6), 'link'=>'#'];
+			
+			$this->items[] = $this->getRandomContentData($itemArr);
+		}
+		
+		if (is_array($item)) {
+			
+			// define items ordering
+			if ($this->order_by == 'created') {
+				
+				if ($this->order_type == 'desc') {
+					// sort by extra-info descendant
+					uasort($this->items, function($a, $b) {
+						return strcmp($a['created'],$b['created']);
+					});
+				} else if ($this->order_type == 'asc') {
+					// sort by extra-info ascendant
+					uasort($this->items, function($a, $b) {
+						return strcmp($b['created'],$a['created']);
+					});
+				}
+				
+			} else if ($this->order_by == 'title') {
+				
+				if ($this->order_type == 'desc') {
+					// sort by title descendant
+					uasort($this->items, function($a, $b) {
+						return strnatcmp($a['title'],$b['title']);
+					});
+				} else if ($this->order_type == 'asc') {
+					// sort by title ascendant
+					uasort($this->items, function($a, $b) {
+						return strnatcmp($b['title'],$a['title']);
+					});
+				}
+				
+			} else if ($this->order_by == 'ordering') {
+				
+				if ($this->order_type == 'asc') {
+					// reverse the manual ordering
+					uasort($this->items, function($a, $b) {
+						return strnatcmp($b['id'],$a['id']);
+					});
+				}
+				
+			} else if ($this->order_by == 'rand()') {
+				
+				// shuffle randomly
+				shuffle($this->items);
+				
+			}
+			
+		}
+		
+		return $this->items;
+	}
+	
 	// manage expansion pack
 	public function manageExpansionPack($plugin,$data) {
 		
@@ -1233,6 +1338,16 @@ class Digi_Showcase_Helper {
 		return $csv;
 	}
 	
+	// explode random data
+	public static function explodeRandomData($itemsQty) {
+	
+		for ($i = 0; $i < $itemsQty; $i++){
+			$arr[] = $i;
+		}
+		
+		return $arr;
+	}
+	
 	// convert hex color to rgb color
 	public static function hexToRgb($color) {
 		
@@ -1246,6 +1361,101 @@ class Digi_Showcase_Helper {
 		$color = hexdec($colorArray[0].$colorArray[1]).', '.hexdec($colorArray[2].$colorArray[3]).', '.hexdec($colorArray[4].$colorArray[5]).', ';
 		
 		return $color;
+	}
+	
+	// generate random data
+	public static function randomData($length = 40) {
+		
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    	$charactersLength = strlen($characters);
+    	$randomString = '';
+		
+		for ($i = 0; $i < $length; $i++) {
+			$randomString .= $characters[random_int(0, $charactersLength - 1)];
+		}
+		
+		$randomInt1 = random_int(2, 8);
+		$randomInt2 = random_int(3, 6);
+		$randomInt3 = random_int(4, 7);
+		$randomInt4 = random_int(0, 1);
+		$randomInt5 = random_int(0, 1);
+		$randomInt6 = random_int(0, 1);
+		
+		$randomStringArr1 = str_split($randomString, $randomInt1);
+		$randomStringArr2 = str_split($randomString, $randomInt2);
+		$randomStringArr3 = str_split($randomString, $randomInt3);
+		
+		$randomString = $randomStringArr1[$randomInt4].' '.$randomStringArr2[$randomInt5].' '.$randomStringArr3[$randomInt6];
+		
+		return $randomString;
+	}
+	
+	// generate random category
+	public static function randomCategory() {
+		
+		$int = random_int(0, 9);
+		$categoryTitle = '';
+		
+		switch ($int) {
+			case 0:
+				$categoryTitle = 'Lorem';
+				break;
+		  	case 1:
+				$categoryTitle = 'Ipsum';
+				break;
+		  	case 2:
+				$categoryTitle = 'Dolor';
+				break;
+			case 3:
+				$categoryTitle = 'Sit';
+				break;
+			case 4:
+				$categoryTitle = 'Amet';
+				break;
+			case 5:
+				$categoryTitle = 'Consectetur';
+				break;
+			case 6:
+				$categoryTitle = 'Adipiscing';
+				break;
+			case 7:
+				$categoryTitle = 'Elit';
+				break;
+			case 8:
+				$categoryTitle = 'Sed';
+				break;
+			case 9:
+				$categoryTitle = 'Do';
+				break;
+		  default:
+		}
+		
+		return $categoryTitle;
+	}
+	
+	// generate random content
+	public static function randomContent($length = 100) {
+		
+		$content = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+    	$contentLength = strlen($content);
+    	
+    	$content .= $content[random_int(0, $contentLength - 1)];
+		
+		return $content;
+	}
+	
+	// generate random extra data
+	public static function randomExtra($length = 10) {
+		
+		$characters = 'abcdefghijklmnopqrstuvwxyz';
+    	$charactersLength = strlen($characters);
+    	$randomString = '';
+		
+		for ($i = 0; $i < $length; $i++) {
+			$randomString .= $characters[random_int(0, $charactersLength - 1)];
+		}
+		
+		return ucfirst($randomString);
 	}
 	
 	// get filter css class
@@ -1279,6 +1489,13 @@ class Digi_Showcase_Helper {
 			}
 		} else if ($source == 50) {
 			// data source is custom csv
+			if ($group) {
+				$filterId = str_replace(' ', '-', strtolower($item['category']));
+			} else {
+				$filterId = $item['id'];
+			}
+		} else if ($source == 51) {
+			// data source is random data
 			if ($group) {
 				$filterId = str_replace(' ', '-', strtolower($item['category']));
 			} else {
@@ -1366,6 +1583,12 @@ class Digi_Showcase_Helper {
     	$dataArray = explode(',', $raw[$item]);
     	
     	return $dataArray[1];
+	}
+	
+	// create title for random data
+	public static function getRandomDataTitle($item) {
+		
+    	return Text::_('MOD_DIGI_SHOWCASE_FIELD_FILTER').' '.$item;
 	}
 
 	// get text alignment

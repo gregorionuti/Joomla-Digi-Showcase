@@ -22,12 +22,9 @@ class JFormFieldTextareacsv extends JFormField {
     
     protected function getInput() {
     	
-    	// include digigreg api
-        include_once "digigreg_api.php";
-        
-    	// get extension general variables
+    	// General variables
     	$document = JFactory::getDocument();
-    	$joomlaVersion = getJoomlaVersion();
+        $joomlaVersion = JVERSION;
     	
     	// specific classes and styles based on joomla version
     	if (version_compare($joomlaVersion, "4.0.0", ">=")) {

@@ -79,6 +79,28 @@ $rows = (int)($params->get('rows', 1));
 $columns = (int)($params->get('columns', 1));
 $columnsSpan = 12 / $columns;
 $columnsWidth = round(100 / $columns);
+$carouselDisplayQuantity = $params->get('carousel-items-quantity', 6);
+$timelineDisplayQuantity = $params->get('timeline-items-quantity', 6);
+$sphereDisplayQuantity = $params->get('sphere-items-quantity', 12);
+$masonryDisplayQuantity = $params->get('masonry-items-quantity', 20);
+
+// quantity
+if ($mode == 0) {
+	// normal mode
+	$itemsQty = $rows * $columns;
+} else if ($mode == 1) {
+	// carousel mode
+	$itemsQty = $carouselDisplayQuantity;
+} else if ($mode == 2) {
+	// timeline mode
+	$itemsQty = $timelineDisplayQuantity;
+} else if ($mode == 3) {
+	// tag cloud mode
+	$itemsQty = $sphereDisplayQuantity;
+} else if ($mode == 4) {
+	// masonry mode
+	$itemsQty = $masonryDisplayQuantity;
+}
 
 // spacing
 $modulePadding = str_replace("px", "", $params->get('module-padding', '0 0 0 0'));
@@ -239,6 +261,12 @@ if ($dataSource == 0) {
 	$filterKeyword = 'custom';
 	$dataRaw = explode(PHP_EOL, $customCSV);
 	$offset = $itemsOffset;
+} else if ($dataSource == 51) {
+	// data source is random data
+	$dataFilter = Digi_Showcase_Helper::explodeRandomData($itemsQty);
+	$filterKeyword = 'random';
+	$dataRaw = Digi_Showcase_Helper::randomData();
+	$offset = $itemsOffset;
 } else if ($dataSource == 99) {
 	// load expansion pack
 	$dataFilter = $expansionPackData;
@@ -289,7 +317,6 @@ $orderType = $orderType == 0 ? 'asc' : 'desc';
 $carouselMode = $params->get('carousel-mode', 0);
 $carouselAutoanimation = $params->get('carousel-autoanimation');
 $carouselAutoanimationInterval = $params->get('carousel-autoanimation-interval', 5000);
-$carouselDisplayQuantity = $params->get('carousel-items-quantity', 6);
 $carouselColumnsQuantity = $params->get('carousel-columns-quantity', 3);
 $carouselScrollQuantity = $params->get('carousel-scroll-quantity', 1);
 $carouselArrows = $params->get('carousel-arrows', 1);
@@ -304,7 +331,6 @@ $carouselCenterElementVal = $carouselCenterElement == '1' ? 'true' : 'false';
 $carouselModeVal = $carouselMode == 1 ? 'true' : 'false';
 
 // timeline
-$timelineDisplayQuantity = $params->get('timeline-items-quantity', 6);
 $timelineAnimation = $params->get('timeline-animation', 1);
 $timelineImageInside = $params->get('timeline-image-inside', 0);
 $timelinePrimaryColor = $params->get('timeline-primary-color');
@@ -314,13 +340,11 @@ $timelineMaxWidth = $params->get('timeline-max-width', 1200);
 $timelineSwitchWidth = $params->get('timeline-switch-width', 768);
 
 // tag cloud
-$sphereDisplayQuantity = $params->get('sphere-items-quantity', 12);
 $sphereWidth = $params->get('sphere-width', 600);
 $sphereHeight = $params->get('sphere-height', 600);
 $sphereRadius = $params->get('sphere-radius', 250);
 
 // masonry
-$masonryDisplayQuantity = $params->get('masonry-items-quantity', 20);
 $masonryColumns = $params->get('masonry-columns', 5);
 $masonryMode = $params->get('masonry-mode', 1);
 $masonryBlocksSize = $params->get('masonry-blocks-size', 0);
@@ -328,24 +352,6 @@ $masonryPattern = $params->get('masonry-pattern', 1);
 $masonryBorderRadius = $params->get('masonry-border-radius', 5);
 $masonryTabletSwitch = $params->get('masonry-tablet-switch', 960);
 $masonrySmartphoneSwitch = $params->get('masonry-smartphone-switch', 640);
-
-// quantity
-if ($mode == 0) {
-	// normal mode
-	$itemsQty = $rows * $columns;
-} else if ($mode == 1) {
-	// carousel mode
-	$itemsQty = $carouselDisplayQuantity;
-} else if ($mode == 2) {
-	// timeline mode
-	$itemsQty = $timelineDisplayQuantity;
-} else if ($mode == 3) {
-	// tag cloud mode
-	$itemsQty = $sphereDisplayQuantity;
-} else if ($mode == 4) {
-	// masonry mode
-	$itemsQty = $masonryDisplayQuantity;
-}
 
 // data to be passed to the helper
 $dataArray = ['show-title'=>$showTitle,
@@ -381,6 +387,9 @@ if ($dataSource == 0 || $dataSource == 1 || $dataSource == 2) {
 } else if ($dataSource == 50) {
 	// data source is custom csv
 	$items = $helper->getCustomCSV($customCSV);
+} else if ($dataSource == 51) {
+	// data source is random data
+	$items = $helper->getRandomData();
 } else if ($dataSource == 99) {
 	// load expansion pack
 	$items = $helper->manageExpansionPack($expansionPack,$expansionPackData);

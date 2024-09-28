@@ -15,10 +15,6 @@ defined('_JEXEC') or die;
 // define ds variable for joomla 3 compatibility
 if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 
-// namespaces
-use Joomla\CMS\Factory;
-use Joomla\CMS\Uri\Uri;
-
 jimport('joomla.filesystem.file');
 
 class JFormFieldDigishowcasewizard extends JFormField {
@@ -26,12 +22,9 @@ class JFormFieldDigishowcasewizard extends JFormField {
     
     protected function getInput() {
     	
-    	// include digigreg api
-        include_once "digigreg_api.php";
-    	
-    	// general variables
-    	$document = Factory::getDocument();
-    	$joomlaVersion = getJoomlaVersion();
+    	// General variables
+    	$document = JFactory::getDocument();
+        $joomlaVersion = JVERSION;
     	
     	// specific classes and styles based on joomla version
     	if (version_compare($joomlaVersion, "4.0.0", ">=")) {
@@ -68,7 +61,7 @@ class JFormFieldDigishowcasewizard extends JFormField {
 			#wizard_form {
 				background-color: #0075b7;
 				border-color: #0075b7;
-				background-image: url("'.URI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'pattern-wizard.png");
+				background-image: url("'.JURI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'pattern-wizard.png");
 				background-repeat: repeat;
 			}
 			#wizard_form > *, #wizard_form .card-title {
@@ -156,7 +149,7 @@ class JFormFieldDigishowcasewizard extends JFormField {
         include_once "digigreg_api.php";
         
         // general variables
-        $uri = Uri::getInstance();
+        $uri = JURI::getInstance();
         
         // set the table and the column of database
         $db_table = '#__modules';
@@ -170,7 +163,7 @@ class JFormFieldDigishowcasewizard extends JFormField {
 		if ($extension_id !== 'none' && is_numeric($extension_id)) {
 		
 			// get module data from database
-			$dbo = Factory::getDBO();
+			$dbo = JFactory::getDBO();
 			$query = 'SELECT params FROM '.$db_table.' WHERE '.$db_column.' = '.$extension_id.' LIMIT 1';	
 			$dbo->setQuery($query);
 			$params = $dbo->loadObject();
@@ -407,7 +400,7 @@ class JFormFieldDigishowcasewizard extends JFormField {
 			$params = json_encode($params);
 			
 			// set module data in database
-			$dbo = Factory::getDBO();
+			$dbo = JFactory::getDBO();
 			$query = 'UPDATE '.$db_table.' SET params = '.$dbo->quote($params).' WHERE '.$db_column.' = '.$extension_id.' LIMIT 1';
             $dbo->setQuery($query);
             $result = $dbo->execute();
@@ -431,7 +424,7 @@ class JFormFieldDigishowcasewizard extends JFormField {
         // standard (list)
         $html .= '<div id="wizard_list" class="'.$card_class.' text-center">';
         $html .= '<div class="'.$card_body_class.'">';
-        $html .= '<a href="#"><img class="card-img-top" alt="List" src="'.URI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'icon-list.png"></a>';
+        $html .= '<a href="#"><img class="card-img-top" alt="List" src="'.JURI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'icon-list.png"></a>';
         $html .= '<p class="'.$card_text_class.'"><a href="#">List</a></p>';
         $html .= '</div>';
         $html .= '</div>';
@@ -439,7 +432,7 @@ class JFormFieldDigishowcasewizard extends JFormField {
         // standard (table)
         $html .= '<div id="wizard_table" class="'.$card_class.' text-center">';
         $html .= '<div class="'.$card_body_class.'">';
-        $html .= '<a href="#"><img class="card-img-top" alt="Table" src="'.URI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'icon-table.png"></a>';
+        $html .= '<a href="#"><img class="card-img-top" alt="Table" src="'.JURI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'icon-table.png"></a>';
         $html .= '<p class="'.$card_text_class.'"><a href="#">Table</a></p>';
         $html .= '</div>';
         $html .= '</div>';
@@ -447,7 +440,7 @@ class JFormFieldDigishowcasewizard extends JFormField {
         // carousel (slideshow)
         $html .= '<div id="wizard_slideshow" class="'.$card_class.' text-center">';
         $html .= '<div class="'.$card_body_class.'">';
-        $html .= '<a href="#"><img class="card-img-top" alt="Slideshow" src="'.URI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'icon-slideshow.png"></a>';
+        $html .= '<a href="#"><img class="card-img-top" alt="Slideshow" src="'.JURI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'icon-slideshow.png"></a>';
         $html .= '<p class="'.$card_text_class.'"><a href="#">Slideshow</a></p>';
         $html .= '</div>';
         $html .= '</div>';
@@ -455,7 +448,7 @@ class JFormFieldDigishowcasewizard extends JFormField {
         // carousel (carousel)
         $html .= '<div id="wizard_carousel" class="'.$card_class.' text-center">';
         $html .= '<div class="'.$card_body_class.'">';
-        $html .= '<a href="#"><img class="card-img-top" alt="Carousel" src="'.URI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'icon-carousel.png"></a>';
+        $html .= '<a href="#"><img class="card-img-top" alt="Carousel" src="'.JURI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'icon-carousel.png"></a>';
         $html .= '<p class="'.$card_text_class.'"><a href="#">Carousel</a></p>';
         $html .= '</div>';
         $html .= '</div>';
@@ -463,7 +456,7 @@ class JFormFieldDigishowcasewizard extends JFormField {
         // timeline
         $html .= '<div id="wizard_timeline" class="'.$card_class.' text-center">';
         $html .= '<div class="'.$card_body_class.'">';
-        $html .= '<a href="#"><img class="card-img-top" alt="Timeline" src="'.URI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'icon-timeline.png"></a>';
+        $html .= '<a href="#"><img class="card-img-top" alt="Timeline" src="'.JURI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'icon-timeline.png"></a>';
         $html .= '<p class="'.$card_text_class.'"><a href="#">Timeline</a></p>';
         $html .= '</div>';
         $html .= '</div>';
@@ -471,7 +464,7 @@ class JFormFieldDigishowcasewizard extends JFormField {
         // tag cloud
         $html .= '<div id="wizard_tag_cloud" class="'.$card_class.' text-center">';
         $html .= '<div class="'.$card_body_class.'">';
-        $html .= '<a href="#"><img class="card-img-top" alt="Tag Cloud" src="'.URI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'icon-tag-cloud.png"></a>';
+        $html .= '<a href="#"><img class="card-img-top" alt="Tag Cloud" src="'.JURI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'icon-tag-cloud.png"></a>';
         $html .= '<p class="'.$card_text_class.'"><a href="#">Tag Cloud</a></p>';
         $html .= '</div>';
         $html .= '</div>';
@@ -479,7 +472,7 @@ class JFormFieldDigishowcasewizard extends JFormField {
         // masonry (random grid)
         $html .= '<div id="wizard_random_grid" class="'.$card_class.' text-center">';
         $html .= '<div class="'.$card_body_class.'">';
-        $html .= '<a href="#"><img class="card-img-top" alt="Random Grid" src="'.URI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'icon-random-grid.png"></a>';
+        $html .= '<a href="#"><img class="card-img-top" alt="Random Grid" src="'.JURI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'icon-random-grid.png"></a>';
         $html .= '<p class="'.$card_text_class.'"><a href="#">Random Grid</a></p>';
         $html .= '</div>';
         $html .= '</div>';
@@ -487,7 +480,7 @@ class JFormFieldDigishowcasewizard extends JFormField {
         // masonry (big grid)
         $html .= '<div id="wizard_big_grid" class="'.$card_class.' text-center">';
         $html .= '<div class="'.$card_body_class.'">';
-        $html .= '<a href="#"><img class="card-img-top" alt="Big Grid" src="'.URI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'icon-big-grid.png"></a>';
+        $html .= '<a href="#"><img class="card-img-top" alt="Big Grid" src="'.JURI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'icon-big-grid.png"></a>';
         $html .= '<p class="'.$card_text_class.'"><a href="#">Big Grid</a></p>';
         $html .= '</div>';
         $html .= '</div>';
@@ -495,7 +488,7 @@ class JFormFieldDigishowcasewizard extends JFormField {
         // masonry (small grid)
         $html .= '<div id="wizard_small_grid" class="'.$card_class.' text-center">';
         $html .= '<div class="'.$card_body_class.'">';
-        $html .= '<a href="#"><img class="card-img-top" alt="Small Grid" src="'.URI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'icon-small-grid.png"></a>';
+        $html .= '<a href="#"><img class="card-img-top" alt="Small Grid" src="'.JURI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'icon-small-grid.png"></a>';
         $html .= '<p class="'.$card_text_class.'"><a href="#">Small Grid</a></p>';
         $html .= '</div>';
         $html .= '</div>';
