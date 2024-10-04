@@ -145,9 +145,6 @@ class JFormFieldDigishowcasewizard extends JFormField {
 			});
 		');
         
-        // include digigreg api
-        include_once "digigreg_api.php";
-        
         // general variables
         $uri = JURI::getInstance();
         
