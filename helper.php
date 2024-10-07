@@ -121,20 +121,20 @@ class Digi_Showcase_Helper {
 			} else {
 				$placeholderPath = Uri::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'no-image.png';
 			}
-		
-			if (trim($item['intro-image']) != '' && $type == 0) {
+			
+			if (array_key_exists('intro-image', $item) && trim($item['intro-image']) != '' && $type == 0) {
 				// return intro item image
 				$image = $item['intro-image'];
-			} else if (trim($item['full-image']) != '' && $type == 2) {
+			} else if (array_key_exists('full-image', $item) && trim($item['full-image']) != '' && $type == 2) {
 				// return full item image
 				$image = $item['full-image'];
 			} else if ($type == 3) {
 				// return an image depending which is available
 				if (trim($item['image']) != '') {
 					$image = $item['image'];
-				} else if (trim($item['intro-image']) != '') {
+				} else if (array_key_exists('intro-image', $item) && trim($item['intro-image']) != '') {
 					$image = $item['intro-image'];
-				} else if (trim($item['full-image']) != '') {
+				} else if (array_key_exists('full-image', $item) && trim($item['full-image']) != '') {
 					$image = $item['full-image'];
 				} else if ($placeholder == 1) {
 					$image = $placeholderPath;
@@ -191,11 +191,21 @@ class Digi_Showcase_Helper {
 		$plugin = $linkArray['plugin'];
 		
 		// get variables from item
-		$itemLink = $item['link'];
-		$itemId = $item['id'];
-		$itemAlias = $item['alias'];
-		$categoryId = $item['categoryid'];
-		$menuId = $item['itemid'];
+		if (array_key_exists('link', $item)) {
+			$itemLink = $item['link'];
+		}
+		if (array_key_exists('id', $item)) {
+			$itemId = $item['id'];
+		}
+		if (array_key_exists('alias', $item)) {
+			$itemAlias = $item['alias'];
+		}
+		if (array_key_exists('categoryid', $item)) {
+			$categoryId = $item['categoryid'];
+		}
+		if (array_key_exists('itemid', $item)) {
+			$menuId = $item['itemid'];
+		}
 		
 		// build link based on module settings
 		if ($source == 0 || $source == 1 || $source == 2) {
@@ -1117,7 +1127,7 @@ class Digi_Showcase_Helper {
 			$this->items[] = $this->getRandomContentData($itemArr);
 		}
 		
-		if (is_array($item)) {
+		if (isset($item) && is_array($item)) {
 			
 			// define items ordering
 			if ($this->order_by == 'created') {
