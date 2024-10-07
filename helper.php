@@ -26,13 +26,11 @@ if (file_exists(dirname(__DIR__, 1).DS.'override'.DS.'helper.php')) {
 		require_once dirname(__DIR__, 1).DS.'include'.DS.'simple_html_dom.php';
 	}
 	require_once dirname(__DIR__, 1).DS.'include'.DS.'image_resizer.php';
-	include_once dirname(__DIR__, 1).DS.'extras'.DS.'elements'.DS.'digigreg_api.php';
 } else {
 	if (!function_exists('str_get_html')) {
 		require_once dirname(__FILE__).DS.'include'.DS.'simple_html_dom.php';
 	}
 	require_once dirname(__FILE__).DS.'include'.DS.'image_resizer.php';
-	include_once dirname(__FILE__).DS.'extras'.DS.'elements'.DS.'digigreg_api.php';
 }
 
 class Digi_Showcase_Helper {
