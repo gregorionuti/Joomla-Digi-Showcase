@@ -15,6 +15,9 @@ defined('_JEXEC') or die;
 // define ds variable for joomla 3 compatibility
 if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 
+// compatibility layer for legacy Joomla global class names (Joomla 5/6 without Backward Compatibility)
+require_once JPATH_ROOT.DS.'modules'.DS.'mod_digi_showcase'.DS.'include'.DS.'legacy_aliases.php';
+
 jimport('joomla.form.formfield');
 
 class JFormFieldDigishowcasextd extends JFormField {

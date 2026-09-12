@@ -15,6 +15,9 @@ defined('_JEXEC') or die;
 // define ds variable for joomla 3 compatibility
 if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 
+// compatibility layer for legacy Joomla global class names (Joomla 5/6 without Backward Compatibility)
+require_once dirname(__FILE__).DS.'include'.DS.'legacy_aliases.php';
+
 // namespaces
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
@@ -56,8 +59,27 @@ class Digi_Showcase_Helper {
 	private $showFeaturedItems;
 	private $showExpiredItems;
 	private $itemsTimeCorrection;
-	private $itemsOffse;
+	private $itemsOffset;
 	private $items;
+	private $data_source;
+	private $data_filter;
+	private $items_qty;
+	private $order_by;
+	private $order_type;
+	private $show_image;
+	private $generate_thumbnail;
+	private $image_width;
+	private $image_height;
+	private $show_title;
+	private $title_characters;
+	private $show_description;
+	private $description_characters;
+	private $strip_html_text;
+	private $show_extra_info;
+	private $show_featured_items;
+	private $show_expired_items;
+	private $items_time_correction;
+	private $items_offset;
 	
 	// construct
 	public function __construct($dataSource, $dataFilter, $rows, $columns, 
@@ -416,8 +438,8 @@ class Digi_Showcase_Helper {
 	
 			$html .= '<li class="nav-item active '.$keyword.'-all"><a class="nav-link" href="#" title="'.$keyword.'-all">'.Text::_('MOD_DIGI_SHOWCASE_FIELD_FILTER_ALL_LABEL').'</a></li>';
 			
-			if ($data) {
-				
+			if ($data && is_array($data)) {
+
 				// declare an array to avoid duplicates
 				$filtersArray = [];
 				

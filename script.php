@@ -51,7 +51,9 @@ class mod_Digi_ShowcaseInstallerScript {
         
         $html .= '<h2>Do you enjoy Digi Showcase? If yes, please, donate a small amount to help its development</h2>';
         
-        $html .= '<p>The development of this extension and its <strong>conversion for Joomla 5</strong> took many hours of work. With a small donation, you can help the developer to keep it up to date and tuned up over time. Even € 1 or whatever small amount can help. Thank you so much!<br /><small><i class="text-dark">Greg</i></small>'.'</p>';
+        $html .= '<p>Now this extension is compatible with <span class="badge bg-success">Joomla 3.9+</span> <span class="badge bg-success">Joomla 4.0+</span> <span class="badge bg-success">Joomla 5.0+</span> <span class="badge bg-success">Joomla 6.0+</span></p>';
+
+        $html .= '<p>The development of this extension and its <strong>conversion for Joomla 6</strong> took many hours of work. With a small donation, you can help the developer to keep it up to date and tuned up over time. Even € 1 or whatever small amount can help. Thank you so much!<br /><small><i class="text-dark">Greg</i></small>'.'</p>';
         $html .= '<p>';
         $html .= '<span class="text-uppercase">Please donate via these links</span> <br />';
         $html .= '<a style="margin-top: 5px; margin-right: 10px;" class="btn btn-light" target="_blank" href="'.$paypal_link.'"><img style="width: 16px; height: 16px; margin-right: 2px; margin-top: -3px;" class="btn-img" src="'.URI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'logo-paypal.png" alt="PayPal" />PayPal</a>';

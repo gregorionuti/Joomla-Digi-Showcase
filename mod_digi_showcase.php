@@ -15,6 +15,9 @@ defined('_JEXEC') or die;
 // define ds variable for joomla 3 compatibility
 if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 
+// compatibility layer for legacy Joomla global class names (Joomla 5/6 without Backward Compatibility)
+require_once dirname(__FILE__).DS.'include'.DS.'legacy_aliases.php';
+
 // namespaces
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Factory;
