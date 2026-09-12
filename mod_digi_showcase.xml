@@ -31,6 +31,8 @@
 		<language tag="ja-JP">ja-JP/ja-JP.mod_digi_showcase.sys.ini</language>
 		<language tag="nl-NL">nl-NL/nl-NL.mod_digi_showcase.ini</language>
 		<language tag="nl-NL">nl-NL/nl-NL.mod_digi_showcase.sys.ini</language>
+		<language tag="fr-FR">fr-FR/fr-FR.mod_digi_showcase.ini</language>
+		<language tag="fr-FR">fr-FR/fr-FR.mod_digi_showcase.sys.ini</language>
 	</languages>
     <config>
 		<fields name="params">
