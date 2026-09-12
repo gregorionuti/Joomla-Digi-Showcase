@@ -127,8 +127,8 @@ class JFormFieldDigishowcaseeds extends JFormField {
         // login to your account
         $html .= '<div id="extra_data_source_go_to_your_account" class="'.$card_class.' text-center">';
         $html .= '<div class="card-body">';
-        $html .= '<a href="https://www.digigreg.com/en/login.html" target="_blank"><img class="card-img-top" alt="Joomla Users" src="'.JURI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'go-to-your-account.png"></a>';
-        $html .= '<p class="'.$card_text_class.'"><a href="https://www.digigreg.com/en/login.html" target="_blank">'.JText::_('MOD_DIGI_SHOWCASE_FIELD_GO_TO_YOUR_ACCOUNT_TITLE').'</a></p>';
+        $html .= '<a href="https://www.digigreg.com/en/account.html" target="_blank"><img class="card-img-top" alt="Joomla Users" src="'.JURI::root().'modules'.DS.'mod_digi_showcase'.DS.'assets'.DS.'images'.DS.'go-to-your-account.png"></a>';
+        $html .= '<p class="'.$card_text_class.'"><a href="https://www.digigreg.com/en/account.html" target="_blank">'.JText::_('MOD_DIGI_SHOWCASE_FIELD_GO_TO_YOUR_ACCOUNT_TITLE').'</a></p>';
         $html .= '</div>';
         $html .= '</div>';
         
